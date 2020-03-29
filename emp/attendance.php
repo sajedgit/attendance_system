@@ -45,9 +45,7 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
-            <div class="box-header with-border">
-              <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
-            </div>
+             
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
@@ -57,7 +55,7 @@
                   <th>Name</th>
                   <th>Time In</th>
                   <th>Time Out</th>
-                  <th>Tools</th>
+                  
                 </thead>
                 <tbody>
                   <?php
@@ -73,10 +71,7 @@
                           <td>".$row['firstname'].' '.$row['lastname']."</td>
                           <td>".date('h:i A', strtotime($row['time_in'])).$status."</td>
                           <td>".date('h:i A', strtotime($row['time_out']))."</td>
-                          <td>
-                            <button class='btn btn-success btn-sm btn-flat edit' data-id='".$row['attid']."'><i class='fa fa-edit'></i> Edit</button>
-                            <button class='btn btn-danger btn-sm btn-flat delete' data-id='".$row['attid']."'><i class='fa fa-trash'></i> Delete</button>
-                          </td>
+                        
                         </tr>
                       ";
                     }
@@ -94,41 +89,5 @@
   <?php include 'includes/attendance_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
-<script>
-$(function(){
-  $('.edit').click(function(e){
-    e.preventDefault();
-    $('#edit').modal('show');
-    var id = $(this).data('id');
-    getRow(id);
-  });
-
-  $('.delete').click(function(e){
-    e.preventDefault();
-    $('#delete').modal('show');
-    var id = $(this).data('id');
-    getRow(id);
-  });
-});
-
-function getRow(id){
-  $.ajax({
-    type: 'POST',
-    url: 'attendance_row.php',
-    data: {id:id},
-    dataType: 'json',
-    success: function(response){
-      $('#datepicker_edit').val(response.date);
-      $('#attendance_date').html(response.date);
-      $('#edit_time_in').val(response.time_in);
-      $('#edit_time_out').val(response.time_out);
-      $('#attid').val(response.attid);
-      $('#employee_name').html(response.firstname+' '+response.lastname);
-      $('#del_attid').val(response.attid);
-      $('#del_employee_name').html(response.firstname+' '+response.lastname);
-    }
-  });
-}
-</script>
 </body>
 </html>

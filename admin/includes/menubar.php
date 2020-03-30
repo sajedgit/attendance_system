@@ -2,7 +2,7 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar user panel -->
-      <div class="user-panel">
+      <div class="user-panel" style="padding-bottom: 25px;">
         <div class="pull-left image">
           <img src="<?php echo (!empty($user['photo'])) ? '../images/'.$user['photo'] : '../images/profile.jpg'; ?>" class="img-circle" alt="User Image">
         </div>
@@ -34,6 +34,7 @@
           </ul>
         </li>
         <li><a href="deduction.php"><i class="fa fa-file-text"></i> Deductions</a></li>
+        <li><a href="department.php"><i class="fa fa-suitcase"></i> Departments</a></li>
         <li><a href="position.php"><i class="fa fa-suitcase"></i> Positions</a></li>
         <li class="header">PRINTABLES</li>
         <li><a href="payroll.php"><i class="fa fa-files-o"></i> <span>Payroll</span></a></li>

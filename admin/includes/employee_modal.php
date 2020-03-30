@@ -8,8 +8,8 @@
             	<h4 class="modal-title"><b>Add Employee</b></h4>
           	</div>
           	<div class="modal-body">
-            	<form class="form-horizontal" method="POST" action="employee_add.php" enctype="multipart/form-data">
-          		  <div class="form-group">
+              <form class="form-horizontal" method="POST" action="employee_add.php" enctype="multipart/form-data">
+          		 <div class="form-group">
                   	<label for="firstname" class="col-sm-3 control-label">Firstname</label>
 
                   	<div class="col-sm-9">
@@ -23,6 +23,15 @@
                     	<input type="text" class="form-control" id="lastname" name="lastname" required>
                   	</div>
                 </div>
+				
+                <div class="form-group">
+                  	<label for="email" class="col-sm-3 control-label">Email</label>
+
+                  	<div class="col-sm-9">
+                    	<input type="text" class="form-control" id="email" name="email" required>
+                  	</div>
+                </div>
+				
                 <div class="form-group">
                   	<label for="address" class="col-sm-3 control-label">Address</label>
 
@@ -57,6 +66,24 @@
                       </select>
                     </div>
                 </div>
+				<div class="form-group">
+                    <label for="edit_department" class="col-sm-3 control-label">Department</label>
+
+                    <div class="col-sm-9">
+                      <select class="form-control" name="department" id="edit_department">
+                         <option value="" selected>- Select -</option>
+                        <?php
+                          $sql = "SELECT * FROM department order by department_name asc";
+                          $query = $conn->query($sql);
+                          while($prow = $query->fetch_assoc()){
+                            echo "
+                              <option value='".$prow['id']."'>".$prow['department_name']."</option>
+                            ";
+                          }
+                        ?>
+                      </select>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label for="position" class="col-sm-3 control-label">Position</label>
 
@@ -64,7 +91,7 @@
                       <select class="form-control" name="position" id="position" required>
                         <option value="" selected>- Select -</option>
                         <?php
-                          $sql = "SELECT * FROM position";
+                          $sql = "SELECT * FROM position  order by description asc";
                           $query = $conn->query($sql);
                           while($prow = $query->fetch_assoc()){
                             echo "
@@ -117,7 +144,7 @@
           	<div class="modal-header">
             	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
               		<span aria-hidden="true">&times;</span></button>
-            	<h4 class="modal-title"><b><span class="employee_id"></span></b></h4>
+            	<h4 class="modal-title"><b><span class="">Edit Employee</span></b></h4>
           	</div>
           	<div class="modal-body">
             	<form class="form-horizontal" method="POST" action="employee_edit.php">
@@ -134,6 +161,13 @@
 
                     <div class="col-sm-9">
                       <input type="text" class="form-control" id="edit_lastname" name="lastname">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit_email" class="col-sm-3 control-label">Email</label>
+
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="edit_email" name="email">
                     </div>
                 </div>
                 <div class="form-group">
@@ -170,6 +204,24 @@
                       </select>
                     </div>
                 </div>
+				<div class="form-group">
+                    <label for="edit_department" class="col-sm-3 control-label">Department</label>
+
+                    <div class="col-sm-9">
+                      <select class="form-control" name="department" id="edit_department">
+                        <option selected id="department_val"></option>
+                        <?php
+                          $sql = "SELECT * FROM department order by department_name asc";
+                          $query = $conn->query($sql);
+                          while($prow = $query->fetch_assoc()){
+                            echo "
+                              <option value='".$prow['id']."'>".$prow['department_name']."</option>
+                            ";
+                          }
+                        ?>
+                      </select>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label for="edit_position" class="col-sm-3 control-label">Position</label>
 
@@ -177,7 +229,7 @@
                       <select class="form-control" name="position" id="edit_position">
                         <option selected id="position_val"></option>
                         <?php
-                          $sql = "SELECT * FROM position";
+                          $sql = "SELECT * FROM position order by description asc";
                           $query = $conn->query($sql);
                           while($prow = $query->fetch_assoc()){
                             echo "

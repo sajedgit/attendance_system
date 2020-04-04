@@ -9,6 +9,7 @@
 	$sql = "SELECT * FROM employees WHERE id = '".$_SESSION['emp_id']."'";
 	$query = $conn->query($sql);
 	$user = $query->fetch_assoc();
-	$base_url = "http://172.16.26.223/attendance";
+	$base_url = "http://".$_SERVER['SERVER_NAME'].":8083/attendance";
+	
 	
 ?>

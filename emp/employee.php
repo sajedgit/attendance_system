@@ -50,26 +50,32 @@
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
-                  <th>Email ID</th>
+				  <th>Name</th>
                   <th>Photo</th>
-                  <th>Name</th>
+                  <th>Email </th>
                   <th>Position</th>
+                  <th>Department</th>
                   <th>Schedule</th>
-                  <th>Member Since</th>
+                  <th>Contact No</th>
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT *, employees.id AS empid FROM employees LEFT JOIN position ON position.id=employees.position_id LEFT JOIN schedules ON schedules.id=employees.schedule_id";
+                    $sql = "SELECT *, employees.id AS empid FROM employees 
+							LEFT JOIN position ON position.id=employees.position_id
+							LEFT JOIN department ON department.id=employees.department_id
+							LEFT JOIN schedules ON schedules.id=employees.schedule_id";
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
                       ?>
                         <tr>
-                          <td><?php echo $row['email']; ?></td>
+						  <td><?php echo $row['firstname'].' '.$row['lastname']; ?></td>
                           <td><img src="<?php echo (!empty($row['photo']))? '../images/'.$row['photo']:'../images/profile.jpg'; ?>" width="30px" height="30px"> <a href="#edit_photo" data-toggle="modal" class="pull-right photo" data-id="<?php echo $row['empid']; ?>"><span class="fa fa-edit"></span></a></td>
-                          <td><?php echo $row['firstname'].' '.$row['lastname']; ?></td>
+                          <td><?php echo $row['email']; ?></td>
                           <td><?php echo $row['description']; ?></td>
+                          <td><?php echo $row['department_name']; ?></td>
                           <td><?php echo date('h:i A', strtotime($row['time_in'])).' - '.date('h:i A', strtotime($row['time_out'])); ?></td>
-                          <td><?php echo date('M d, Y', strtotime($row['created_on'])) ?></td>
+                       <?php  /*  <td><?php echo date('M d, Y', strtotime($row['created_on'])) ?></td> */ ?>
+                          <td><?php echo $row['contact_info']; ?></td> 
 
                         </tr>
                       <?php

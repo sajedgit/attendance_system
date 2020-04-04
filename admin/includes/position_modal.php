@@ -16,13 +16,13 @@
                     	<input type="text" class="form-control" id="title" name="title" required>
                   	</div>
                 </div>
-                <div class="form-group">
+             <?php /*   <div class="form-group">
                     <label for="rate" class="col-sm-3 control-label">Rate per Hr</label>
 
                     <div class="col-sm-9">
                       <input type="text" class="form-control" id="rate" name="rate" required>
                     </div>
-                </div>
+                </div> */ ?>
           	</div>
           	<div class="modal-footer">
             	<button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
@@ -52,13 +52,13 @@
                       <input type="text" class="form-control" id="edit_title" name="title">
                     </div>
                 </div>
-                <div class="form-group">
+             <?php  /*  <div class="form-group">
                     <label for="edit_rate" class="col-sm-3 control-label">Rate per Hr</label>
 
                     <div class="col-sm-9">
                       <input type="text" class="form-control" id="edit_rate" name="rate">
                     </div>
-                </div>
+                </div> */ ?>
           	</div>
           	<div class="modal-footer">
             	<button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
@@ -76,7 +76,7 @@
           	<div class="modal-header">
             	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
               		<span aria-hidden="true">&times;</span></button>
-            	<h4 class="modal-title"><b>Deleting...</b></h4>
+            	<h4 class="modal-title"><b>Delete</b></h4>
           	</div>
           	<div class="modal-body">
             	<form class="form-horizontal" method="POST" action="position_delete.php">

@@ -52,13 +52,13 @@
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
-                  <th>Email ID</th>
-                  <th>Photo</th>
                   <th>Name</th>
-                  <th>Department</th>
+                  <th>Photo</th>
+                  <th>Email</th>
+				  <th>Contact No</th>
                   <th>Position</th>
-                  <th>Schedule</th>
-                  <th>Member Since</th>
+                  <th>Department</th>
+               <?php /*   <th>Schedule</th> */ ?>
                   <th>Tools</th>
                 </thead>
                 <tbody>
@@ -72,14 +72,16 @@
                     while($row = $query->fetch_assoc()){
                       ?>
                         <tr>
-                          <td><?php echo $row['email']; ?></td>
-                          <td><img src="<?php echo (!empty($row['photo']))? '../images/'.$row['photo']:'../images/profile.jpg'; ?>" width="30px" height="30px"> <a href="#edit_photo" data-toggle="modal" class="pull-right photo" data-id="<?php echo $row['empid']; ?>"><span class="fa fa-edit"></span></a></td>
-                          <td><?php echo $row['firstname'].' '.$row['lastname']; ?></td>
-                          <td><?php echo $row['department_name']; ?></td>
-                          <td><?php echo $row['description']; ?></td>
-                          <td><?php echo date('h:i A', strtotime($row['time_in'])).' - '.date('h:i A', strtotime($row['time_out'])); ?></td>
-                          <td><?php echo date('M d, Y', strtotime($row['created_on'])) ?></td>
-                          <td>
+						  <td class="emp_name"><?php echo $row['firstname'].' '.$row['lastname']; ?></td>
+                          <td class="emp_photo"><img src="<?php echo (!empty($row['photo']))? '../images/'.$row['photo']:'../images/profile.jpg'; ?>" width="30px" height="30px"> <a href="#edit_photo" data-toggle="modal" class="pull-right photo" data-id="<?php echo $row['empid']; ?>"><span class="fa fa-edit"></span></a></td>
+                          <td class="emp_email"><?php echo $row['email']; ?></td>
+                          <td class="emp_email"><?php echo $row['contact_info']; ?></td>
+						  <td class="emp_description"><?php echo $row['description']; ?></td>
+                          <td class="emp_dept_name"><?php echo $row['department_name']; ?></td>
+						  
+                         <?php /* <td class="emp_time"><?php echo date('h:i A', strtotime($row['time_in'])).' - '.date('h:i A', strtotime($row['time_out'])); ?></td>
+                          */ ?>
+						 <td class="emp_action">
                             <button class="btn btn-success btn-sm edit btn-flat" data-id="<?php echo $row['empid']; ?>"><i class="fa fa-edit"></i> Edit</button>
                             <button class="btn btn-danger btn-sm delete btn-flat" data-id="<?php echo $row['empid']; ?>"><i class="fa fa-trash"></i> Delete</button>
                           </td>
@@ -102,22 +104,31 @@
 <?php include 'includes/scripts.php'; ?>
 <script>
 $(function(){
-  $('.edit').click(function(e){
-    e.preventDefault();
+/*   $('.edit').click(function(e){
+    //e.preventDefault();
     $('#edit').modal('show');
     var id = $(this).data('id');
     getRow(id);
-  });
+  }); */
+  
+ $(document).on('click', ".edit", function() {
+      //e.preventDefault();
+    $('#edit').modal('show');
+    var id = $(this).data('id');
+    getRow(id);        
+}); 
 
-  $('.delete').click(function(e){
-    e.preventDefault();
+  
+  $(document).on('click', ".delete", function() {
+    //e.preventDefault();
     $('#delete').modal('show');
     var id = $(this).data('id');
     getRow(id);
   });
 
-  $('.photo').click(function(e){
-    e.preventDefault();
+ 
+  $(document).on('click', ".photo", function() {
+   // e.preventDefault();
     var id = $(this).data('id');
     getRow(id);
   });
@@ -132,7 +143,7 @@ function getRow(id){
     dataType: 'json',
     success: function(response){
       $('.empid').val(response.empid);
-      $('.employee_id').html(response.employee_id);
+      $('.employee_id').html(response.firstname+' '+response.lastname);
       $('.del_employee_name').html(response.firstname+' '+response.lastname);
       $('#employee_name').html(response.firstname+' '+response.lastname);
       $('#edit_firstname').val(response.firstname);
@@ -140,7 +151,12 @@ function getRow(id){
       $('#edit_email').val(response.email);
       $('#edit_address').val(response.address);
       $('#edit_contact').val(response.contact);
-      $('#datepicker_edit').val(response.birthdate);
+	 
+	  if(response.birthdate=="0000-00-00")
+		$('#datepicker_edit').val("");
+	  else
+		$('#datepicker_edit').val(response.birthdate);  
+  
       $('#edit_contact').val(response.contact_info);
       $('#gender_val').val(response.gender).html(response.gender);
       $('#department_val').val(response.department_id).html(response.department_name);

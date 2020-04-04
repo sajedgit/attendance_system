@@ -73,7 +73,7 @@
                       <select class="form-control" name="department" id="edit_department">
                          <option value="" selected>- Select -</option>
                         <?php
-                          $sql = "SELECT * FROM department order by department_name asc";
+                          $sql = "SELECT * FROM department where active=1 order by department_name asc";
                           $query = $conn->query($sql);
                           while($prow = $query->fetch_assoc()){
                             echo "
@@ -211,7 +211,7 @@
                       <select class="form-control" name="department" id="edit_department">
                         <option selected id="department_val"></option>
                         <?php
-                          $sql = "SELECT * FROM department order by department_name asc";
+                          $sql = "SELECT * FROM department  where active=1  order by department_name asc";
                           $query = $conn->query($sql);
                           while($prow = $query->fetch_assoc()){
                             echo "

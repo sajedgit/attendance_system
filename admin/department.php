@@ -52,17 +52,20 @@
               <table id="example1" class="table table-bordered">
                 <thead>
                   <th>Department Name</th>
+                  <th>Department Status</th>
               
                   <th>Tools</th>
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT * FROM department";
+                    $sql = "SELECT * FROM department  order by department_name asc";
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
+						$status=$row['active']==1?'Active':'Inactive';
                       echo "
                         <tr>
                           <td>".$row['department_name']."</td>
+                          <td>".$status."</td>
                           
                           <td>
                             <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>

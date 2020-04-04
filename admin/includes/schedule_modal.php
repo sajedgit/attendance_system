@@ -10,7 +10,7 @@
           	<div class="modal-body">
             	<form class="form-horizontal" method="POST" action="schedule_add.php">
           		  <div class="form-group">
-                  	<label for="time_in" class="col-sm-3 control-label">Time In</label>
+                  	<label for="time_in" class="col-sm-3 control-label required">Time In</label>
 
                   	<div class="col-sm-9">
                       <div class="bootstrap-timepicker">
@@ -19,7 +19,7 @@
                   	</div>
                 </div>
                 <div class="form-group">
-                    <label for="time_out" class="col-sm-3 control-label">Time Out</label>
+                    <label for="time_out" class="col-sm-3 control-label required">Time Out</label>
 
                     <div class="col-sm-9">
                       <div class="bootstrap-timepicker">
@@ -27,6 +27,17 @@
                       </div>
                     </div>
                 </div>
+				
+				<div class="form-group">
+                    <label for="buffer_time" class="col-sm-3 control-label required">Buffer Time</label>
+
+                    <div class="col-sm-9">
+                      <div class="buffer_time">
+                        <input type="number"min="0" class="form-control" id="buffer_time" name="buffer_time" required>
+                      </div>
+                    </div>
+                </div>
+				
           	</div>
           	<div class="modal-footer">
             	<button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
@@ -50,23 +61,35 @@
             	<form class="form-horizontal" method="POST" action="schedule_edit.php">
             		<input type="hidden" id="timeid" name="id">
                 <div class="form-group">
-                    <label for="edit_time_in" class="col-sm-3 control-label">Time In</label>
+                    <label for="edit_time_in" class="col-sm-3 control-label required">Time In</label>
 
                     <div class="col-sm-9">
                       <div class="bootstrap-timepicker">
-                        <input type="text" class="form-control timepicker" id="edit_time_in" name="time_in">
+                        <input type="text" class="form-control timepicker" required id="edit_time_in" name="time_in">
                       </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="edit_time_out" class="col-sm-3 control-label">Time out</label>
+                    <label for="edit_time_out" class="col-sm-3 control-label required">Time out</label>
 
                     <div class="col-sm-9">
                       <div class="bootstrap-timepicker">
-                        <input type="text" class="form-control timepicker" id="edit_time_out" name="time_out">
+                        <input type="text" class="form-control timepicker" required id="edit_time_out" name="time_out">
                       </div>
                     </div>
                 </div>
+				
+				
+				<div class="form-group">
+                    <label for="edit_buffer_time" class="col-sm-3 control-label required">Buffer Time</label>
+
+                    <div class="col-sm-9">
+                      <div class="buffer_time">
+                        <input type="number" min="0" class="form-control" id="edit_buffer_time" name="buffer_time" required>
+                      </div>
+                    </div>
+                </div>
+				
           	</div>
           	<div class="modal-footer">
             	<button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>

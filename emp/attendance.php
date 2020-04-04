@@ -63,14 +63,20 @@
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
                       $status = ($row['status'])?'<span class="label label-warning pull-right">ontime</span>':'<span class="label label-danger pull-right">late</span>';
-                      echo "
+                     
+						 if($row['time_out']=="00:00:00")
+							$logout_time=" Not Logout Yet ";
+						 else
+							$logout_time=date('h:i A', strtotime($row['time_out']));
+						 
+						 echo "
                         <tr>
                           <td class='hidden'></td>
                           <td>".date('M d, Y', strtotime($row['date']))."</td>
                           <td>".$row['email']."</td>
                           <td>".$row['firstname'].' '.$row['lastname']."</td>
                           <td>".date('h:i A', strtotime($row['time_in'])).$status."</td>
-                          <td>".date('h:i A', strtotime($row['time_out']))."</td>
+                          <td>".$logout_time."</td>
                         
                         </tr>
                       ";

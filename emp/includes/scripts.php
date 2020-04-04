@@ -85,6 +85,18 @@ $(function(){
     autoclose: true,
     format: 'yyyy-mm-dd'
   })
+  
+  $('#datepicker_add_for_attendance').datepicker({
+    autoclose: true,
+	endDate: new Date(),
+    format: 'yyyy-mm-dd'
+  })
+  
+  $('#datepicker_edit_for_attendance').datepicker({
+    autoclose: true,
+	endDate: new Date(),
+    format: 'yyyy-mm-dd'
+  })
 
   //Timepicker
   $('.timepicker').timepicker({

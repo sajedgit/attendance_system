@@ -9,37 +9,50 @@
           	</div>
           	<div class="modal-body">
             	<form class="form-horizontal" method="POST" action="attendance_add.php">
-          		  <div class="form-group">
-                  	<label for="employee" class="col-sm-3 control-label">Employee ID</label>
+          		
+				
+			 	<div class="form-group">
+				
+					<label for="employee"  class="col-sm-3 control-label required">Employee </label>
 
                   	<div class="col-sm-9">
-                    	<input type="text" class="form-control" id="employee" name="employee" required>
+                    	<input list="list_users" id="list_user_id" type="text" name="list_user" required>
+						 <input type="hidden" name="employee" id="employee_hidden">
+						<datalist id="list_users">
+						<?php while($row = $query_emp->fetch_assoc()): ?>
+							<option data-value="<?php echo $row['id'] ?>" value="<?php echo $row['name'] ?>"><?php echo $row['description'] ?></option>
+						<?php endwhile; ?>
+						</datalist>
                   	</div>
-                </div>
+					
+				</div>
+				
+				
+				
                 <div class="form-group">
-                    <label for="datepicker_add" class="col-sm-3 control-label">Date</label>
+                    <label for="datepicker_add_for_attendance" class="col-sm-3 control-label  required">Date</label>
 
                     <div class="col-sm-9"> 
                       <div class="date">
-                        <input type="text" class="form-control" id="datepicker_add" name="date" required>
+                        <input type="text" class="form-control"  autocomplete="off" id="datepicker_add_for_attendance" name="date" required>
                       </div>
                     </div>
                 </div>
                 <div class="form-group">
-                  	<label for="time_in" class="col-sm-3 control-label">Time In</label>
+                  	<label for="time_in" class="col-sm-3 control-label required">Time In</label>
 
                   	<div class="col-sm-9">
                   		<div class="bootstrap-timepicker">
-                    		<input type="text" class="form-control timepicker" id="time_in" name="time_in">
+                    		<input type="text" class="form-control timepicker" id="time_in" name="time_in" required>
                     	</div>
                   	</div>
                 </div>
                 <div class="form-group">
-                  	<label for="time_out" class="col-sm-3 control-label">Time Out</label>
+                  	<label for="time_out" class="col-sm-3 control-label required">Time Out</label>
 
                   	<div class="col-sm-9">
                   		<div class="bootstrap-timepicker">
-                    		<input type="text" class="form-control timepicker" id="time_out" name="time_out">
+                    		<input type="text" class="form-control timepicker" id="time_out" name="time_out" required>
                     	</div>
                   	</div>
                 </div>
@@ -66,29 +79,29 @@
             	<form class="form-horizontal" method="POST" action="attendance_edit.php">
             		<input type="hidden" id="attid" name="id">
                 <div class="form-group">
-                    <label for="datepicker_edit" class="col-sm-3 control-label">Date</label>
+                    <label for="datepicker_edit_for_attendance" class="col-sm-3 control-label required">Date</label>
 
                     <div class="col-sm-9"> 
                       <div class="date">
-                        <input type="text" class="form-control" id="datepicker_edit" name="edit_date">
+                        <input type="text" disabled class="form-control" id="datepicker_edit_for_attendance"  autocomplete="off" name="edit_date" required>
                       </div>
                     </div>
                 </div>
                 <div class="form-group">
-                  	<label for="edit_time_in" class="col-sm-3 control-label">Time In</label>
+                  	<label for="edit_time_in" class="col-sm-3 control-label required">Time In</label>
 
                   	<div class="col-sm-9">
                   		<div class="bootstrap-timepicker">
-                    		<input type="text" class="form-control timepicker" id="edit_time_in" name="edit_time_in">
+                    		<input type="text" class="form-control timepicker" id="edit_time_in" name="edit_time_in" required>
                     	</div>
                   	</div>
                 </div>
                 <div class="form-group">
-                  	<label for="edit_time_out" class="col-sm-3 control-label">Time Out</label>
+                  	<label for="edit_time_out" class="col-sm-3 control-label required">Time Out</label>
 
                   	<div class="col-sm-9">
                   		<div class="bootstrap-timepicker">
-                    		<input type="text" class="form-control timepicker" id="edit_time_out" name="edit_time_out">
+                    		<input type="text" class="form-control timepicker" id="edit_time_out" name="edit_time_out" required>
                     	</div>
                   	</div>
                 </div>

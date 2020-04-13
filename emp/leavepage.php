@@ -32,8 +32,6 @@
                         </label>
                     </div>
                 </div>
-
-
                 
                 <div class="container" style="margin-top: 5px;">
                     <!-- employee name/designation/department section -->
@@ -50,14 +48,79 @@
                     </div>
                     
                     <div class="row" style="margin-right: 15px">
+                        <?php
+                            $conn = new mysqli('localhost', 'root', '', 'attendance');
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                            }else{
+                                // echo "db connection successfull </br>";
+                            }
+
+                            $employee_id = $_SESSION['emp_id'];
+                            $employee_name = "";
+                            $position_id = "";
+                            $department_id = "";
+                            $position = "";
+                            $dept = "";
+                            $sql = "SELECT * FROM employees WHERE id = '$employee_id'";
+                            $query = $conn->query($sql);
+                    
+                            if($query->num_rows < 1){
+                                $_SESSION['error'] = 'Can not find user';
+                            }else{
+                                $row = $query->fetch_assoc();
+                                $employee_name = $row['firstname'] . ' ' . $row['lastname'];
+                                $position_id = $row['position_id'];
+                                $department_id = $row['department_id'];  
+                            }
+
+                            $sql = "SELECT * FROM position WHERE id = '$position_id' ";
+                            $query = $conn->query($sql);
+                    
+                            if($query->num_rows < 1){
+                                $_SESSION['error'] = 'Can not find user';
+                            }else{
+                                $row = $query->fetch_assoc();
+                                $position = $row['description'];
+                            }
+
+                            $sql = "SELECT * FROM department WHERE id = '$department_id' ";
+                            $query = $conn->query($sql);
+                    
+                            if($query->num_rows < 1){
+                                $_SESSION['error'] = 'Can not find user';
+                            }else{
+                                $row = $query->fetch_assoc();
+                                $dept = $row['department_name'];
+                            }
+
+                            $allmail = array();
+                            $sql = "SELECT email FROM employees";
+                            $query = $conn->query($sql);
+                    
+                            if($query->num_rows < 1){
+                                $_SESSION['error'] = 'Can not find user email';
+                            }else{
+                                while($row = $query->fetch_assoc()){
+                                    array_push($allmail, $row['email']);
+                                }  
+                            }                            
+                        ?>
+
                         <div class="col-sm-6">
-                            <input class=" form-control rounded-0 border border-left-0 " type="text" id="employee_name" name="employee_name" placeholder="Dhiman Kumar Sarker" >
+                            <input class=" form-control rounded-0 border border-left-0 " type="text" id="employee_name" name="employee_name" 
+                            <?php echo "value='$employee_name'"; ?> 
+                            >
                         </div>
                         <div class="col-sm-3 ">
-                            <input class="form-control rounded-0 border " type="text" id="employee_designation" name="employee_designation" placeholder="Programmer" >
-                        </div>
+                            <input class="form-control rounded-0 border " type="text" id="employee_designation" name="employee_designation" 
+                            <?php echo "value='$position'"; ?>
+                            >
+                        </div>  
                         <div class="col-sm-3 ">
-                            <input class="form-control rounded-0 border border-right-0 " type="text" id="employee_dept" name="employee_dept" placeholder="Software Implementation" >
+                            <input class="form-control rounded-0 border border-right-0 " type="text" id="employee_dept" name="employee_dept" 
+                            <?php echo "value='$dept'"; ?>
+                            >
                         </div>
                     </div>                
                     
@@ -121,7 +184,7 @@
                             <!-- Duties will be carried out by -->
                             <div class="row" style="margin-top: 5px">
                                 <div class="col-sm-3">
-                                    <label class="control-label">Duties will be carried out by: </label>
+                                    <label class="control-label">Alternative person: </label>
                                 </div>
                                 <div class="col-sm-7">
                                     <input type="text" id="duties_carried_by" name="duties_carried_by" class="form-control rounded-0 border-left-0 border-right-0 border-top-0" required>
@@ -136,9 +199,11 @@
                                 <div class="col-sm-7">
                                     <select class="form-control rounded-0 border-left-0 border-right-0 border-top-0" id="supervisor_select" name="supervisor_select">
                                         <option>Select Supervisor</option>
-                                        <option>shoikot@gmail.com</option>
-                                        <option>mainul@gmail.com</option>
-                                        <option>masud@gmail.com</option>
+                                        <?php
+                                            for ($i=0; $i<count($allmail); $i++){
+                                                echo "<option>$allmail[$i]</option>";
+                                            }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
@@ -151,9 +216,11 @@
                                 <div class="col-sm-7">
                                     <select class="form-control rounded-0 border-left-0 border-right-0 border-top-0" id="hod_select" name="hod_select">
                                         <option>Select HOD</option>
-                                        <option>shahjalal@gmail.com</option>
-                                        <option>shoikot@gmail.com</option>
-                                        <option>mainul@gmail.com</option>
+                                        <?php
+                                            for ($i=0; $i<count($allmail); $i++){
+                                                echo "<option>$allmail[$i]</option>";
+                                            }
+                                        ?>
                                     </select>
                                 </div>
                             </div>

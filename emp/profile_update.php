@@ -3,7 +3,6 @@
 
 	if(isset($_GET['return'])){
 		$return = $_GET['return'];
-		
 	}
 	else{
 		$return = 'home.php';

@@ -25,7 +25,6 @@
 
             $rawdate = htmlentities($_POST["dateinput_to"]);
             $date_to = date('Y-m-d', strtotime($rawdate));
-
             
             echo "Employee Name: "          . $employee_name   . '</br>';
             echo "Employee Designation: "   . $designation     . '</br>';
@@ -140,6 +139,7 @@
                 $sql = "CREATE TABLE $tableName (
                         id                  INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                         employee_name       VARCHAR(40)     NOT NULL,
+                        employee_email      VARCHAR(50)     NOT NULL,
                         designation         VARCHAR(30)     NOT NULL,
                         department          VARCHAR(40)     NOT NULL,
                         company_div         VARCHAR(10)     NOT NULL,

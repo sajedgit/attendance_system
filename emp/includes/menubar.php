@@ -19,6 +19,7 @@
         
         <li><a href="attendance.php"><i class="fa fa-calendar"></i> <span>Attendance</span></a></li>
         <li><a href="employee.php"><i class="fa fa-calendar"></i> <span>Employee List</span></a></li>
+        <li><a href="leavepage.php"><i class="fa fa-calendar"></i> <span>Leave Application</span></a></li>
        
         
       </ul>

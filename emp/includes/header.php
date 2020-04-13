@@ -35,6 +35,12 @@
   	<!-- Google Font -->
   	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
+    <!-- Added By SAGOR -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
+    <!-- <link rel="stylesheet" href="lib/datepicker/css/bootstrap-datepicker.css"> -->
+    <!-- Added By SAGOR -->
+
+
   	<style type="text/css">
   		.mt20{
   			margin-top:20px;
@@ -72,5 +78,6 @@
         height: 100%;
         border-radius: 5px;
       }
-  	</style>
+      </style>
+      
 </head>

@@ -42,6 +42,28 @@
 <script src="../dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
+
+<!-- Added By SAGOR -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
+<!-- <script src="lib/datepicker/js/bootstrap-datepicker.js"></script> -->
+
+<!-- Added By SAGOR -->
+
+
+
+<script>
+  $(function () {
+    $(".leave_form_datetime").datepicker({
+        format: "dd-mm-yyyy",
+        autoclose: true,
+        todayBtn: true,
+        pickerPosition: "bottom-left"
+    });
+  })
+</script>   
+
 <script>
   $(function () {
     $('#example1').DataTable({
@@ -57,6 +79,7 @@
     })
   })
 </script>
+
 <script>
 $(function(){
   /** add active class and stay opened when selected */

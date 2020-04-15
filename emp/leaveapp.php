@@ -16,7 +16,7 @@
 
             // TODO: contact & other number verify 
             $employee_contact   = test_input($_POST["employee_contact"]);
-            $alternate_person  = test_input($_POST["alternate_person"]);
+            $alternate_person   = test_input($_POST["alternate_person"]);
             $supervisor_id      = test_input($_POST["supervisor_select"]);
             $dept_head_id       = test_input($_POST["hod_select"]);
 
@@ -73,11 +73,11 @@
             } else {
                 echo "Error inserting data!";
             }
-            
         }
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             handleFormPostRequest();
+            header('location: leave_form_response.php');
         }
 
         function test_input($data) {
@@ -99,7 +99,6 @@
             }
             return $temporay_var;
         }
-
 
         class Database{
             public $db_connect;
@@ -143,7 +142,7 @@
                         leave_purpose       VARCHAR(50) NOT NULL,
                         leave_address       VARCHAR(50) NOT NULL,
                         
-                        contact             INT(16)  UNSIGNED   NOT NULL,
+                        contact             BIGINT(16)  UNSIGNED   NOT NULL,
                         alt_person_id       INT(4)   UNSIGNED   NOT NULL,
                         supervisor_id       INT(4)   UNSIGNED   NOT NULL,
                         dept_head_id        INT(4)   UNSIGNED   NOT NULL,

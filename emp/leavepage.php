@@ -292,9 +292,34 @@
                     <br><br>
                     <!-- form submit section -->
                     <div class="form group text-right" style="margin-right: 30px; margin-bottom: 10px;">
-                        <input type="submit" class="btn btn-success" id="submit_button" name="submit_button">
+                        <button type="button" class="btn btn-success" id="submit_button" name="submit_button" data-toggle="modal" data-target="#myModal">Submit</button>
                         <input type="reset"  class="btn btn-warning" id="reset_button"  name="reset_button">
-                    </div>                    
+                    </div> 
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" role="dialog" >
+                        <div class="modal-dialog modal-md modal-dialog-centered" >
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Need Confirmation</h4>
+                                </div>
+                                <div class="modal-body bg-dark">
+                                    <h4 class="text">
+                                    <!-- <span class="glyphicon glyphicon-alert"></span> -->
+                                    Are you sure, want to submit?
+                                    </h4>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-info" id="submit_button_modal" name="submit_button_modal">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             </form>
         </div>

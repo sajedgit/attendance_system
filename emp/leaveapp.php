@@ -11,35 +11,35 @@
             $department     = verifyPostTextData("employee_dept");
             $leave_purpose  = verifyPostTextData("leave_purpose");
             $leave_address  = verifyPostTextData("leave_address");
-            $duties_carried_by  = verifyPostTextData("duties_carried_by");
-            $supervisor_select  = verifyPostTextData("supervisor_select");
-            $hod_select         = verifyPostTextData("hod_select");
             $employee_signature = verifyPostTextData("employee_signature");
             $company_division   = verifyPostTextData("radio_company_div");
 
-            // TODO: Verify date & contact number 
-            $employee_contact   = $_POST["employee_contact"];
+            // TODO: contact & other number verify 
+            $employee_contact   = test_input($_POST["employee_contact"]);
+            $alternate_person  = test_input($_POST["alternate_person"]);
+            $supervisor_id      = test_input($_POST["supervisor_select"]);
+            $dept_head_id       = test_input($_POST["hod_select"]);
 
+            //TODO: date time verify 
             $rawdate = htmlentities($_POST["dateinput_from"]);
             $date_from = date('Y-m-d', strtotime($rawdate));
 
             $rawdate = htmlentities($_POST["dateinput_to"]);
             $date_to = date('Y-m-d', strtotime($rawdate));
-            
-            echo "Employee Name: "          . $employee_name   . '</br>';
-            echo "Employee Designation: "   . $designation     . '</br>';
-            echo "Employee Department: "    . $department    . '</br>';
-            echo "leave_purpose: "      . $leave_purpose     . '</br>';
-            echo "leave_address: "      . $leave_address     . '</br>';
-            echo "duties_carried_by: "  . $duties_carried_by . '</br>';
-            echo "supervisor_select: "  . $supervisor_select . '</br>';
-            echo "hod_select: "         . $hod_select        . '</br>';
-            echo "employee_signature: " . $employee_signature   . '</br>';
-            echo "dateinput_from: "     . $date_from       . '</br>';
-            echo "dateinput_to: "       . $date_to         . '</br>';
-            echo "employee_contact: "   . $employee_contact     . '</br>';
-            echo "company_division: "   . $company_division     . '</br>';
-            
+
+            // echo "Company Division: "   . $company_division     . '</br>';            
+            // echo "Employee Name: "          . $employee_name   . '</br>';
+            // echo "Employee Designation: "   . $designation     . '</br>';
+            // echo "Employee Department: "    . $department    . '</br>';
+            // echo "employee_contact: "   . $employee_contact     . '</br>';
+            // echo "Leave period from: "     . $date_from       . '</br>';
+            // echo "Leave period to: "       . $date_to         . '</br>';
+            // echo "Leave purpose: "      . $leave_purpose     . '</br>';
+            // echo "Leave_address: "      . $leave_address     . '</br>';
+            // echo "Alt person ID: "  . $alternate_person . '</br>';
+            // echo "Supervisor ID: "  . $supervisor_id . '</br>';
+            // echo "Dept Head ID: "         . $dept_head_id        . '</br>';
+            // echo "Employee Signature: " . $employee_signature   . '</br>';            
             
             $conn = new mysqli('localhost', 'root', '', 'attendance');
             if ($conn->connect_error) {
@@ -62,23 +62,18 @@
                 $employee_email = $row['email'];  
             }
 
-            $sql = "INSERT INTO leaveapp (employee_name, employee_email, designation, department, company_div, leave_from, leave_to, leave_purpose, leave_address, contact, duties_carried_by, supervisor, hod) 
-                        VALUES ('$employee_name', '$employee_email', '$designation', '$department', '$company_division', '$date_from', '$date_to', 
-                        '$leave_purpose', '$leave_address', '$employee_contact', '$duties_carried_by', '$supervisor_select', '$hod_select')";
-           
+           $sql = "INSERT INTO leaveapp (employee_name, employee_email, designation, department, company_div, leave_from, leave_to, leave_purpose, leave_address, 
+           contact, alt_person_id, supervisor_id, dept_head_id, supervisor_approval, hod_approval, hr_approval, final_status) 
+                   VALUES ('$employee_name', '$employee_email', '$designation', '$department', '$company_division', '$date_from', '$date_to', 
+                   '$leave_purpose', '$leave_address', '$employee_contact', '$alternate_person', 
+                   '$supervisor_id', '$dept_head_id', 'pending', 'pending', 'pending', 'pending')";
+
            if ($conn->query($sql) === TRUE) {
                 echo "Data inserted successfully </br>";
             } else {
                 echo "Error inserting data!";
             }
             
-
-            // $dbobject = new Database($conn);
-            // $dbobject->insertData('leaveApp', $employee_name, $designation, $department, $company_division, $date_from, $date_to, 
-            //                     $leave_purpose, $leave_address, $employee_contact, $duties_carried_by, $supervisor_select, $hod_select);
-            
-            // $dbobject->createTable('leaveApp');
-            // $dbobject->disconnect();            
         }
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -134,7 +129,6 @@
             // }
 
 
-
             public function createTable($tableName){
                 $sql = "CREATE TABLE $tableName (
                         id                  INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -143,14 +137,20 @@
                         designation         VARCHAR(30)     NOT NULL,
                         department          VARCHAR(40)     NOT NULL,
                         company_div         VARCHAR(10)     NOT NULL,
-                        leave_from          DATE,
-                        leave_to            DATE,
-                        leave_purpose       VARCHAR(50),
-                        leave_address       VARCHAR(50),
-                        contact             VARCHAR(20),
-                        duties_carried_by   VARCHAR(40),
-                        supervisor          VARCHAR(40),
-                        hod                 VARCHAR(40)
+                        
+                        leave_from          DATE    NOT NULL,
+                        leave_to            DATE    NOT NULL,
+                        leave_purpose       VARCHAR(50) NOT NULL,
+                        leave_address       VARCHAR(50) NOT NULL,
+                        
+                        contact             INT(16)  UNSIGNED   NOT NULL,
+                        alt_person_id       INT(4)   UNSIGNED   NOT NULL,
+                        supervisor_id       INT(4)   UNSIGNED   NOT NULL,
+                        dept_head_id        INT(4)   UNSIGNED   NOT NULL,
+                        supervisor_approval VARCHAR(10) NOT NULL,
+                        hod_approval        VARCHAR(10) NOT NULL,
+                        hr_approval         VARCHAR(10) NOT NULL,
+                        final_status        VARCHAR(10) NOT NULL
                         )";
 
                 if ($this->db_connect->query($sql) === TRUE) {
@@ -160,9 +160,12 @@
                 }
             }
 
-            public function insertData($tableName, $name, $designation, $dept, $div, $from, $to, $purpose, $addr, $contact, $duty_carry, $sup, $hod){
-                $sql = "INSERT INTO $tableName (employee_name, designation, department, company_div, leave_from, leave_to, leave_purpose, leave_address, contact, duties_carried_by, supervisor, hod) 
-                        VALUES ('$name', '$designation', '$dept', '$div', '$from', '$to', '$purpose', '$addr', '$contact', '$duty_carry', '$sup', '$hod')";
+            public function insertData($tableName, $name, $email, $designation, $dept, $div, $from, $to, $purpose, $addr, $contact, $alt_person, 
+            $sup, $hod, $sup_apprv, $hod_apprv, $hr_apprv, $status){
+                $sql = "INSERT INTO $tableName (employee_name, employee_email, designation, department, company_div, leave_from, leave_to, leave_purpose, leave_address, 
+                contact, alt_person_id, supervisor_id, dept_head_id, supervisor_approval, hod_approval, hr_approval, final_status) 
+                        VALUES ('$name', $email, '$designation', '$dept', '$div', '$from', '$to', '$purpose', '$addr', '$contact', '$alt_person', 
+                        '$sup', '$hod', '$sup_apprv', '$hod_apprv', '$hr_apprv', '$status')";
 
                 if ($this->db_connect->query($sql) === TRUE) {
                     $last_id = $this->db_connect->insert_id;

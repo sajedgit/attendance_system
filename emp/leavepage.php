@@ -14,7 +14,7 @@
     <div class="container">
         <h3 class="text-center"><strong>Leave Application Form</strong></h3>
         <div id="leave-app-employee-section">
-            <form action="leaveapp.php" method="POST" style="border: 1px solid black">
+            <form action="leaveapp.php" method="POST" style="border: 2px solid black">
                 <!-- company division radio/checkbox section -->
                 <div class="container">
                     <div class="row" style="margin-top: 5px; margin-left: 5px">
@@ -94,17 +94,17 @@
                                 $dept = $row['department_name'];
                             }
 
-                            $allmail = array();
-                            $sql = "SELECT email FROM employees";
+                            $allemployee  = array();
+                            $sql = "SELECT * FROM employees";
                             $query = $conn->query($sql);
                     
                             if($query->num_rows < 1){
-                                $_SESSION['error'] = 'Can not find user email';
+                                $_SESSION['error'] = 'Can not find user';
                             }else{
                                 while($row = $query->fetch_assoc()){
-                                    array_push($allmail, $row['email']);
-                                }  
-                            }                            
+                                    array_push($allemployee, array($row['id'], ($row['firstname'] . ' ' . $row['lastname'])));
+                                }
+                            }                        
                         ?>
 
                         <div class="col-sm-6">
@@ -157,7 +157,7 @@
                                     <label class="control-label">Purpose of Leave: </label>
                                 </div>
                                 <div class="col-sm-7">
-                                    <input type="text" id="leave_purpose" name="leave_purpose" class="form-control rounded-0 border-left-0 border-right-0 border-top-0" required>
+                                    <input type="text" id="leave_purpose" name="leave_purpose" class="form-control" required>
                                 </div>
                             </div>
 
@@ -167,7 +167,7 @@
                                     <label class="control-label">Address on Leave: </label>
                                 </div>
                                 <div class="col-sm-7">
-                                    <input type="text" id="leave_address" name="leave_address" class="form-control rounded-0 border-left-0 border-right-0 border-top-0" required>
+                                    <input type="text" id="leave_address" name="leave_address" class="form-control" required>
                                 </div>
                             </div>
 
@@ -177,7 +177,7 @@
                                     <label class="control-label">Contact: </label>
                                 </div>
                                 <div class="col-sm-7">
-                                    <input type="text" id="employee_contact" name="employee_contact" class="form-control rounded-0 border-left-0 border-right-0 border-top-0" required>
+                                    <input type="text" id="employee_contact" name="employee_contact" class="form-control" required>
                                 </div>
                             </div>
 
@@ -187,21 +187,32 @@
                                     <label class="control-label">Alternative person: </label>
                                 </div>
                                 <div class="col-sm-7">
-                                    <input type="text" id="duties_carried_by" name="duties_carried_by" class="form-control rounded-0 border-left-0 border-right-0 border-top-0" required>
+                                    <select class="form-control" id="alternate_person" name="alternate_person">
+                                        <option value="" selected hidden >Select Alternative Person</option>
+                                        <?php
+                                            for ($i=0; $i<count($allemployee); $i++){
+                                                $id = $allemployee[$i][0];
+                                                $name = $allemployee[$i][1];
+                                                echo "<option value='$id'>$name</option>";
+                                            }
+                                        ?>
+                                    </select>
                                 </div>
                             </div>
 
                             <!-- supervisor select -->
                             <div class="row" style="margin-top: 5px">
                                 <div class="col-sm-3">
-                                    <label for="supervisor_select" class=" control-label">Supervisor</label>
+                                    <label for="supervisor_select" class=" control-label">Supervisor: </label>
                                 </div>
                                 <div class="col-sm-7">
-                                    <select class="form-control rounded-0 border-left-0 border-right-0 border-top-0" id="supervisor_select" name="supervisor_select">
-                                        <option>Select Supervisor</option>
+                                    <select class="form-control" id="supervisor_select" name="supervisor_select">
+                                    <option value="" selected hidden >Select Supervisor</option>
                                         <?php
-                                            for ($i=0; $i<count($allmail); $i++){
-                                                echo "<option>$allmail[$i]</option>";
+                                            for ($i=0; $i<count($allemployee); $i++){
+                                                $id = $allemployee[$i][0];
+                                                $name = $allemployee[$i][1];
+                                                echo "<option value='$id'>$name</option>";
                                             }
                                         ?>
                                     </select>
@@ -211,14 +222,16 @@
                             <!-- HOD select -->
                             <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
                                 <div class="col-sm-3">
-                                    <label for="hod_select" class="control-label">Department Head</label>
+                                    <label for="hod_select" class="control-label">Department Head: </label>
                                 </div>
                                 <div class="col-sm-7">
-                                    <select class="form-control rounded-0 border-left-0 border-right-0 border-top-0" id="hod_select" name="hod_select">
-                                        <option>Select HOD</option>
+                                    <select class="form-control" id="hod_select" name="hod_select">
+                                        <option value="" selected hidden >Select Department Head</option>
                                         <?php
-                                            for ($i=0; $i<count($allmail); $i++){
-                                                echo "<option>$allmail[$i]</option>";
+                                            for ($i=0; $i<count($allemployee); $i++){
+                                                $id = $allemployee[$i][0];
+                                                $name = $allemployee[$i][1];
+                                                echo "<option value='$id'>$name</option>";
                                             }
                                         ?>
                                     </select>
@@ -269,7 +282,7 @@
                     <!-- signature of employee section -->
                     <div class="col-sm-4" style="margin-right: 30px">
                         <div class="row">
-                            <input type="text" id="employee_signature" name="employee_signature" class="form-control rounded-0 border-left-0 border-right-0 border-top-0" required>
+                            <input type="text" id="employee_signature" name="employee_signature" class="form-control" required>
                         </div>
                         <div class="row">
                             <label class="control-label" style="margin-top: 5px">Signature of the employee (Applicant) </label>

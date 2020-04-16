@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Apr 16, 2020 at 07:08 PM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.3.0
+-- Host: 127.0.0.1
+-- Generation Time: Apr 16, 2020 at 07:15 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `apsystem`
+-- Database: `attendance`
 --
 
 -- --------------------------------------------------------
@@ -82,7 +81,8 @@ INSERT INTO `attendance` (`id`, `employee_id`, `date`, `time_in`, `status`, `tim
 (141, 91, '2020-04-02', '20:54:52', 0, '00:00:00', 0),
 (142, 105, '2020-04-05', '16:27:33', 0, '00:00:00', 0),
 (143, 1, '2020-04-05', '16:27:52', 0, '00:00:00', 0),
-(144, 1, '2020-04-09', '12:05:10', 0, '18:58:08', 5.8666666666667);
+(144, 1, '2020-04-09', '12:05:10', 0, '18:58:08', 5.8666666666667),
+(145, 105, '2020-04-16', '22:37:37', 0, '22:42:19', 0.066666666666667);
 
 -- --------------------------------------------------------
 
@@ -333,6 +333,41 @@ INSERT INTO `employees` (`id`, `employee_id`, `email`, `password`, `firstname`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `leaveapp`
+--
+
+CREATE TABLE `leaveapp` (
+  `id` int(6) UNSIGNED NOT NULL,
+  `employee_name` varchar(40) NOT NULL,
+  `employee_email` varchar(50) NOT NULL,
+  `designation` varchar(30) NOT NULL,
+  `department` varchar(40) NOT NULL,
+  `company_div` varchar(10) NOT NULL,
+  `leave_from` date NOT NULL,
+  `leave_to` date NOT NULL,
+  `leave_purpose` varchar(50) NOT NULL,
+  `leave_address` varchar(50) NOT NULL,
+  `contact` bigint(16) UNSIGNED NOT NULL,
+  `alt_person_id` int(4) UNSIGNED NOT NULL,
+  `supervisor_id` int(4) UNSIGNED NOT NULL,
+  `dept_head_id` int(4) UNSIGNED NOT NULL,
+  `supervisor_approval` varchar(10) NOT NULL,
+  `hod_approval` varchar(10) NOT NULL,
+  `hr_approval` varchar(10) NOT NULL,
+  `final_status` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `leaveapp`
+--
+
+INSERT INTO `leaveapp` (`id`, `employee_name`, `employee_email`, `designation`, `department`, `company_div`, `leave_from`, `leave_to`, `leave_purpose`, `leave_address`, `contact`, `alt_person_id`, `supervisor_id`, `dept_head_id`, `supervisor_approval`, `hod_approval`, `hr_approval`, `final_status`) VALUES
+(1, 'Dhiman Kumar  Sarker', 'dhiman.kumar@synesisit.com.bd', 'Programmer', 'Software Development', 'SIL', '2020-04-19', '2020-04-21', 'casual', 'green road', 1717677400, 1, 48, 3, 'pending', 'pending', 'pending', 'pending'),
+(2, 'Dhiman Kumar  Sarker', 'dhiman.kumar@synesisit.com.bd', 'Programmer', 'Software Development', 'SIL', '2020-04-21', '2020-04-22', 'casual', 'dhaka', 1717677400, 1, 48, 3, 'pending', 'pending', 'pending', 'pending');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `overtime`
 --
 
@@ -473,6 +508,12 @@ ALTER TABLE `employees`
   ADD UNIQUE KEY `email` (`email`);
 
 --
+-- Indexes for table `leaveapp`
+--
+ALTER TABLE `leaveapp`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `overtime`
 --
 ALTER TABLE `overtime`
@@ -505,7 +546,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
 
 --
 -- AUTO_INCREMENT for table `cashadvance`
@@ -530,6 +571,12 @@ ALTER TABLE `department`
 --
 ALTER TABLE `employees`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=176;
+
+--
+-- AUTO_INCREMENT for table `leaveapp`
+--
+ALTER TABLE `leaveapp`
+  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `overtime`

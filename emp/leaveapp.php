@@ -1,11 +1,15 @@
-
-    <?php
-        include 'includes/conn.php';  
-        include 'includes/session.php';    
+<?php 
+        include_once 'includes/session.php';  
+        include_once 'includes/conn.php';    
           
         echo htmlspecialchars($_SERVER["PHP_SELF"]) . "</br></br>";
 
-        function handleFormPostRequest(){
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            handleFormPostRequest($conn);
+            header('location: leave_form_response.php');
+        }
+
+        function handleFormPostRequest($conn){
             $employee_name  = verifyPostTextData("employee_name");
             $designation    = verifyPostTextData("employee_designation");
             $department     = verifyPostTextData("employee_dept");
@@ -25,59 +29,34 @@
             $date_from = date('Y-m-d', strtotime($rawdate));
 
             $rawdate = htmlentities($_POST["dateinput_to"]);
-            $date_to = date('Y-m-d', strtotime($rawdate));
-
-            // echo "Company Division: "   . $company_division     . '</br>';            
-            // echo "Employee Name: "          . $employee_name   . '</br>';
-            // echo "Employee Designation: "   . $designation     . '</br>';
-            // echo "Employee Department: "    . $department    . '</br>';
-            // echo "employee_contact: "   . $employee_contact     . '</br>';
-            // echo "Leave period from: "     . $date_from       . '</br>';
-            // echo "Leave period to: "       . $date_to         . '</br>';
-            // echo "Leave purpose: "      . $leave_purpose     . '</br>';
-            // echo "Leave_address: "      . $leave_address     . '</br>';
-            // echo "Alt person ID: "  . $alternate_person . '</br>';
-            // echo "Supervisor ID: "  . $supervisor_id . '</br>';
-            // echo "Dept Head ID: "         . $dept_head_id        . '</br>';
-            // echo "Employee Signature: " . $employee_signature   . '</br>';            
+            $date_to = date('Y-m-d', strtotime($rawdate)); 
             
-            $conn = new mysqli('localhost', 'root', '', 'attendance');
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }else{
-                echo "db connection successfull </br>";
-            }
-
+            // database query 
             $employee_id = $_SESSION['emp_id'];
             $employee_email = "";
+            
+            // get email address from 'employees' table 
             $sql = "SELECT * FROM employees WHERE id = '$employee_id'";
             $query = $conn->query($sql);
-    
+
             if($query->num_rows < 1){
-                $_SESSION['error'] = 'No account with this email';
-                echo "Not getting any email" . '</br>'; 
+                $_SESSION['error'] = 'leaveapp: No account with this email';
             }else{
-                $row = $query->fetch_assoc();
-                echo "Retrieved Email: " . $row['email'] . '</br>'; 
+                $row = $query->fetch_assoc(); 
                 $employee_email = $row['email'];  
             }
 
-           $sql = "INSERT INTO leaveapp (employee_name, employee_email, designation, department, company_div, leave_from, leave_to, leave_purpose, leave_address, 
-           contact, alt_person_id, supervisor_id, dept_head_id, supervisor_approval, hod_approval, hr_approval, final_status) 
+            // insert data to leaveapp table
+            $sql = "INSERT INTO leaveapp (employee_name, employee_email, designation, department, company_div, leave_from, leave_to, leave_purpose, leave_address, 
+            contact, alt_person_id, supervisor_id, dept_head_id, supervisor_approval, hod_approval, hr_approval, final_status) 
                    VALUES ('$employee_name', '$employee_email', '$designation', '$department', '$company_division', '$date_from', '$date_to', 
                    '$leave_purpose', '$leave_address', '$employee_contact', '$alternate_person', 
                    '$supervisor_id', '$dept_head_id', 'pending', 'pending', 'pending', 'pending')";
 
-           if ($conn->query($sql) === TRUE) {
-                echo "Data inserted successfully </br>";
+            if ($conn->query($sql) === TRUE) {
             } else {
-                echo "Error inserting data!";
+                $_SESSION['error'] = 'leaveapp: Error inserting data to leaveapp table';
             }
-        }
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            handleFormPostRequest();
-            header('location: leave_form_response.php');
         }
 
         function test_input($data) {
@@ -107,26 +86,9 @@
             const USERNAME   = "root";
             const PASSWORD   = "";
 
-            public function __construct($globalDbObject){
-                $this->db_connect = $globalDbObject;
+            public function __construct($db_object){
+                $this->db_connect = $db_object;
             }
-
-            // public function __construct($dbName){
-            //     $this->dbname = $dbName;
-            // }
-
-            // public function connect(){
-            //     // create db connection
-            //     $this->db_connect = new mysqli(self::SERVERNAME, self::USERNAME, self::PASSWORD, $this->dbname);
-
-            //     // check connection establishment 
-            //     if($this->db_connect->connect_error){
-            //         die("db connection failed! " . $this->db_connect->connect_error);
-            //     }else{
-            //         echo "db connection successfull </br>";
-            //     }
-            // }
-
 
             public function createTable($tableName){
                 $sql = "CREATE TABLE $tableName (
@@ -159,10 +121,11 @@
                 }
             }
 
-            public function insertData($tableName, $name, $email, $designation, $dept, $div, $from, $to, $purpose, $addr, $contact, $alt_person, 
-            $sup, $hod, $sup_apprv, $hod_apprv, $hr_apprv, $status){
-                $sql = "INSERT INTO $tableName (employee_name, employee_email, designation, department, company_div, leave_from, leave_to, leave_purpose, leave_address, 
-                contact, alt_person_id, supervisor_id, dept_head_id, supervisor_approval, hod_approval, hr_approval, final_status) 
+            public function insertData($tableName, $name, $email, $designation, $dept, $div, $from, $to, $purpose, $addr, 
+                                       $contact, $alt_person, $sup, $hod, $sup_apprv, $hod_apprv, $hr_apprv, $status)
+            {
+                $sql = "INSERT INTO $tableName (employee_name, employee_email, designation, department, company_div, leave_from, leave_to, 
+                        leave_purpose, leave_address, contact, alt_person_id, supervisor_id, dept_head_id, supervisor_approval, hod_approval, hr_approval, final_status) 
                         VALUES ('$name', $email, '$designation', '$dept', '$div', '$from', '$to', '$purpose', '$addr', '$contact', '$alt_person', 
                         '$sup', '$hod', '$sup_apprv', '$hod_apprv', '$hr_apprv', '$status')";
 
@@ -192,20 +155,11 @@
                 }
             }
 
-            // public function createDatabase($db){ 
-            //     $sql = "CREATE DATABASE $db";
-            //     if($this->db_connect->query($sql)){
-            //         echo "database created successfully </br>";
-            //     }else{
-            //         echo "error creating database. " . $this->db_connect->error . "</br>";
-            //     }      
-            // }
-
-            public function disconnect(){
+            private function disconnect(){
                 $this->db_connect->close();
                 echo "db disconnected </br>";
             }
         }  
 
-    ?>    
+?>    
 

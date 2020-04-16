@@ -1,6 +1,6 @@
 
-<?php include 'includes/session.php'; ?>
-<?php include 'includes/header.php'; ?>
+<?php include_once 'includes/session.php'; ?>
+<?php include_once 'includes/header.php'; ?>
 
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -12,9 +12,9 @@
   <div class="content-wrapper">
 
     <div class="container">
-        <h3 class="text-center"><strong>Leave Application Form</strong></h3>
+        <h3 class="text-center bounce"><strong>Leave Application Form</strong></h3>
         <div id="leave-app-employee-section">
-            <form action="leaveapp.php" method="POST" style="border: 2px solid black">
+            <form id="leaveform" action="leaveapp.php" onSubmit="return validateLeaveForm();" method="POST" style="border: 2px solid black">
                 <!-- company division radio/checkbox section -->
                 <div class="container">
                     <div class="row" style="margin-top: 5px; margin-left: 5px">
@@ -49,13 +49,6 @@
                     
                     <div class="row" style="margin-right: 15px">
                         <?php
-                            $conn = new mysqli('localhost', 'root', '', 'attendance');
-                            if ($conn->connect_error) {
-                                die("Connection failed: " . $conn->connect_error);
-                            }else{
-                                // echo "db connection successfull </br>";
-                            }
-
                             $employee_id = $_SESSION['emp_id'];
                             $employee_name = "";
                             $position_id = "";
@@ -134,14 +127,14 @@
                                 </div>
 
                                 <div class="col-sm-7">    
-                                    <div class='input-group date leave_form_datetime' data-provide="datepicker">
+                                    <div class='input-group date leave_form_datetime' >
                                         <input type='text' class="form-control" id="dateinput_from" name="dateinput_from" placeholder="From" required>
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
 
-                                    <div class='input-group date leave_form_datetime' data-provide="datepicker">
+                                    <div class='input-group date leave_form_datetime' >
                                         <input type='text' class="form-control" id="dateinput_to" name="dateinput_to" placeholder="To" required>
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
@@ -298,19 +291,18 @@
 
                     <!-- Modal -->
                     <div class="modal fade" id="myModal" role="dialog" >
-                        <div class="modal-dialog modal-md modal-dialog-centered" >
+                        <div class="modal-dialog modal-sm modal-dialog-centered"  >
                             <!-- Modal content-->
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Need Confirmation</h4>
+                                    <h4 class="modal-title">Make sure you want to submit</h4>
                                 </div>
-                                <div class="modal-body bg-dark">
+                                <!-- <div class="modal-body">
                                     <h4 class="text">
-                                    <!-- <span class="glyphicon glyphicon-alert"></span> -->
                                     Are you sure, want to submit?
                                     </h4>
-                                </div>
+                                </div> -->
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                                     <button type="submit" class="btn btn-info" id="submit_button_modal" name="submit_button_modal">Submit</button>
@@ -332,6 +324,21 @@
   <?php include 'includes/employee_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
+
+<script>
+function validateLeaveForm(){       
+    var valid = true;
+    
+    if($('#alternate_person').val()==0 || $('#supervisor_select').val()==0 || $('#hod_select').val()==0){
+        valid = false;
+    }
+    
+    if(!valid){
+        alert('Please Fill the form with correct values');
+    }
+    return valid;
+}
+</script>
 
 </body>
 </html>

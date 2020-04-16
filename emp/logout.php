@@ -13,7 +13,6 @@
 	$query = $conn->query($sql);
 	
 		$row = $query->fetch_assoc();
-	
 		$sql = "UPDATE attendance SET time_out = '$logout_now' WHERE id = '".$row['uid']."'";
 		if($conn->query($sql)){
 			$output['message'] = 'Time out: '.$row['firstname'].' '.$row['lastname'];

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2020 at 11:26 PM
+-- Generation Time: Apr 16, 2020 at 07:21 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -52,6 +52,10 @@ CREATE TABLE `leaveapp` (
 -- Dumping data for table `leaveapp`
 --
 
+INSERT INTO `leaveapp` (`id`, `employee_name`, `employee_email`, `designation`, `department`, `company_div`, `leave_from`, `leave_to`, `leave_purpose`, `leave_address`, `contact`, `alt_person_id`, `supervisor_id`, `dept_head_id`, `supervisor_approval`, `hod_approval`, `hr_approval`, `final_status`) VALUES
+(1, 'Dhiman Kumar  Sarker', 'dhiman.kumar@synesisit.com.bd', 'Programmer', 'Software Development', 'SIL', '2020-04-19', '2020-04-21', 'casual', 'green road', 1717677400, 1, 48, 3, 'pending', 'pending', 'pending', 'pending'),
+(2, 'Dhiman Kumar  Sarker', 'dhiman.kumar@synesisit.com.bd', 'Programmer', 'Software Development', 'SIL', '2020-04-21', '2020-04-22', 'casual', 'dhaka', 1717677400, 1, 48, 3, 'pending', 'pending', 'pending', 'pending');
+
 --
 -- Indexes for dumped tables
 --
@@ -70,7 +74,7 @@ ALTER TABLE `leaveapp`
 -- AUTO_INCREMENT for table `leaveapp`
 --
 ALTER TABLE `leaveapp`
-  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

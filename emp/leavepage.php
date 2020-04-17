@@ -19,16 +19,16 @@
                 <div class="container">
                     <div class="row" style="margin-top: 5px; margin-left: 5px">
                         <label class="radio-inline">
-                            <input type="radio" name="radio_company_div" value="SIL" checked><b>SIL</b>
+                            <input type="radio" name="radio_company_div" value="1" checked><b>SIL</b>
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" name="radio_company_div" value="TB"><b>TB</b>
+                            <input type="radio" name="radio_company_div" value="2"><b>TB</b>
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" name="radio_company_div" value="MT"><b>MT</b>
+                            <input type="radio" name="radio_company_div" value="3"><b>MT</b>
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" name="radio_company_div" value="SB"><b>SB</b>
+                            <input type="radio" name="radio_company_div" value="4"><b>SB</b>
                         </label>
                     </div>
                 </div>
@@ -144,6 +144,23 @@
                                 </div>
                             </div>
 
+                            <!-- Leave type select -->
+                            <div class="row" style="margin-top: 5px;">
+                                <div class="col-sm-3">
+                                    <label for="leavetype_select" class="control-label">Leave Type: </label>
+                                </div>
+                                <div class="col-sm-7">
+                                    <select class="form-control" id="leavetype_select" name="leavetype_select">
+                                        <option value="" selected hidden >Select Leave Type</option>
+                                        <option value='Casual'>Casual</option>
+                                        <option value='Sick'>Sick</option>
+                                        <option value='Earned'>Earned</option>
+                                        <option value='Maternity'>Maternity</option>
+                                        <option value='Others'>Others</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <!-- purpose of leave -->
                             <div class="row" style="margin-top: 5px">
                                 <div class="col-sm-3"> 
@@ -194,7 +211,7 @@
                             </div>
 
                             <!-- supervisor select -->
-                            <div class="row" style="margin-top: 5px">
+                            <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
                                 <div class="col-sm-3">
                                     <label for="supervisor_select" class=" control-label">Supervisor: </label>
                                 </div>
@@ -212,24 +229,6 @@
                                 </div>
                             </div>
 
-                            <!-- HOD select -->
-                            <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
-                                <div class="col-sm-3">
-                                    <label for="hod_select" class="control-label">Department Head: </label>
-                                </div>
-                                <div class="col-sm-7">
-                                    <select class="form-control" id="hod_select" name="hod_select">
-                                        <option value="" selected hidden >Select Department Head</option>
-                                        <?php
-                                            for ($i=0; $i<count($allemployee); $i++){
-                                                $id = $allemployee[$i][0];
-                                                $name = $allemployee[$i][1];
-                                                echo "<option value='$id'>$name</option>";
-                                            }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
                         </div>
 
                         <!-- blank column -->
@@ -328,8 +327,7 @@
 <script>
 function validateLeaveForm(){       
     var valid = true;
-    
-    if($('#alternate_person').val()==0 || $('#supervisor_select').val()==0 || $('#hod_select').val()==0){
+    if($('#alternate_person').val()==0 || $('#supervisor_select').val()==0 || $('#leavetype_select').val()==0){
         valid = false;
     }
     

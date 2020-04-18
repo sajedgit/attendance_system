@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 17, 2020 at 11:36 PM
+-- Generation Time: Apr 18, 2020 at 05:08 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -493,6 +493,23 @@ INSERT INTO `position` (`id`, `description`, `rate`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `remaining_leave`
+--
+
+CREATE TABLE `remaining_leave` (
+  `id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `casual` int(3) NOT NULL,
+  `sick` int(3) NOT NULL,
+  `earned` int(3) NOT NULL,
+  `maternity` int(3) NOT NULL,
+  `others` int(3) NOT NULL,
+  `year` year(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `schedules`
 --
 
@@ -587,6 +604,12 @@ ALTER TABLE `position`
   ADD UNIQUE KEY `description` (`description`);
 
 --
+-- Indexes for table `remaining_leave`
+--
+ALTER TABLE `remaining_leave`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `schedules`
 --
 ALTER TABLE `schedules`
@@ -661,6 +684,12 @@ ALTER TABLE `overtime`
 --
 ALTER TABLE `position`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+
+--
+-- AUTO_INCREMENT for table `remaining_leave`
+--
+ALTER TABLE `remaining_leave`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `schedules`

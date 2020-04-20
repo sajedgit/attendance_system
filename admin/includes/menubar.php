@@ -37,6 +37,8 @@
         <li><a href="department.php"><i class="fa fa-suitcase"></i> Departments</a></li>
         <li><a href="position.php"><i class="fa fa-suitcase"></i> Positions</a></li>
         <li><a href="employee_type.php"><i class="fa fa-suitcase"></i> Employee Type</a></li>
+        <li><a href="leave_type.php"><i class="fa fa-suitcase"></i> Leave Type</a></li>
+        <li><a href="leave_alloc.php"><i class="fa fa-suitcase"></i> Leave Allocation</a></li>
         <li class="header">PRINTABLES</li>
        <?php /* <li><a href="payroll.php"><i class="fa fa-files-o"></i> <span>Payroll</span></a></li> */ ?>
         <li><a href="schedule_employee.php"><i class="fa fa-clock-o"></i> <span>Schedule</span></a></li>

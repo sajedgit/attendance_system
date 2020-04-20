@@ -11,11 +11,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Employee Type
+        Leave Allocation
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Employee Type</li>
+        <li class="active">Leave Allocation</li>
       </ol>
     </section>
     <!-- Main content -->
@@ -51,23 +51,31 @@
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
-                  <th>Type Description</th>
+                  <th>Employee Type</th>
+                  <th>Leave Type</th>
+                  <th>Leave Quantity</th>
                   <th>Tools</th>
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT * FROM employee_type";
+                    $sql = "SELECT *, leave_allocation.id as leave_id FROM leave_allocation 
+                    LEFT JOIN employee_type ON employee_type.id = leave_allocation.emp_type_id
+                    LEFT JOIN leave_type ON leave_type.id = leave_allocation.leave_type_id
+                    ";
+                    
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
-                      echo "
-                        <tr>
-                          <td>".$row['type_description']."</td>
-                          <td>
-                            <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
-                            <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
-                          </td>
-                        </tr>
-                      ";
+                        echo "
+                            <tr>
+                            <td>".$row['type_description']."</td>
+                            <td>".$row['leave_description']."</td>
+                            <td>".$row['quantity']."</td>
+                            <td>
+                                <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['leave_id']."'><i class='fa fa-edit'></i> Edit</button>
+                                <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['leave_id']."'><i class='fa fa-trash'></i> Delete</button>
+                            </td>
+                            </tr>
+                        ";
                     }
                   ?>
                 </tbody>
@@ -80,7 +88,7 @@
   </div>
     
   <?php include 'includes/footer.php'; ?>
-  <?php include 'includes/employee_type_modal.php'; ?>
+  <?php include 'includes/leave_alloc_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script>
@@ -90,6 +98,7 @@ $(function(){
    
     $('#edit').modal('show');
     var id = $(this).data('id');
+    // var person = prompt("Check id", id);
     getRow(id);
   });
 
@@ -104,14 +113,16 @@ $(function(){
 function getRow(id){
   $.ajax({
     type: 'POST',
-    url: 'employee_type_row.php',
+    url: 'leave_alloc_row.php',
     data: {id:id},
     dataType: 'json',
     success: function(response){
-      $('#typeid').val(response.id);
-      $('#edit_employee_type').val(response.type_description);
-      $('#del_typeid').val(response.id);
-      $('#del_employee_type').html(response.type_description);
+    $('.leave_id').val(response.leave_id);
+    $('#del_leave_alloc').html(response.type_description + "-" + response.leave_description);
+    $('#employee_type_val').val(response.emp_type_id).html(response.type_description);
+    $('#leave_type_val').val(response.leave_type_id).html(response.leave_description);
+    $('#edit_quantity').val(response.quantity).html(response.quantity);
+
     }
   });
 }

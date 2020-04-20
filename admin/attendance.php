@@ -76,12 +76,11 @@
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
                       $status = ($row['status'])?'<span class="label label-warning pull-right">ontime</span>':'<span class="label label-danger pull-right">late</span>';
-                     
-					
-					 if($row['time_out']=="00:00:00")
-						$logout_time=" Not Logout Yet ";
-					 else
-					    $logout_time=date('h:i A', strtotime($row['time_out']));
+            
+                      if($row['time_out']=="00:00:00")
+                        $logout_time=" Not Logout Yet ";
+                      else
+                          $logout_time=date('h:i A', strtotime($row['time_out']));
                      
   					  echo "
                         <tr>

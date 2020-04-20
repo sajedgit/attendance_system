@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 20, 2020 at 08:50 PM
+-- Generation Time: Apr 21, 2020 at 12:48 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -429,6 +429,17 @@ CREATE TABLE `leave_allocation` (
   `quantity` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `leave_allocation`
+--
+
+INSERT INTO `leave_allocation` (`id`, `emp_type_id`, `leave_type_id`, `quantity`) VALUES
+(2, 1, 7, 14),
+(3, 1, 8, 14),
+(6, 2, 7, 0),
+(7, 2, 8, 3),
+(8, 1, 10, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -439,6 +450,17 @@ CREATE TABLE `leave_type` (
   `id` int(4) NOT NULL,
   `leave_description` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `leave_type`
+--
+
+INSERT INTO `leave_type` (`id`, `leave_description`) VALUES
+(7, 'casual'),
+(8, 'sick'),
+(9, 'earned'),
+(10, 'maternity'),
+(11, 'others');
 
 -- --------------------------------------------------------
 
@@ -716,13 +738,13 @@ ALTER TABLE `leaveapp`
 -- AUTO_INCREMENT for table `leave_allocation`
 --
 ALTER TABLE `leave_allocation`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `leave_type`
 --
 ALTER TABLE `leave_type`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `overtime`

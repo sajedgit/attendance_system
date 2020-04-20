@@ -11,11 +11,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Employee Type
+        Leave Type
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Employee Type</li>
+        <li class="active">Leave Type</li>
       </ol>
     </section>
     <!-- Main content -->
@@ -51,17 +51,18 @@
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
-                  <th>Type Description</th>
+                  <th>Leave Type</th>
+               <?php  /*  <th>Rate per Hour</th> */ ?>
                   <th>Tools</th>
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT * FROM employee_type";
+                    $sql = "SELECT * FROM leave_type";
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
                       echo "
                         <tr>
-                          <td>".$row['type_description']."</td>
+                          <td>".$row['leave_description']."</td>
                           <td>
                             <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
                             <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
@@ -80,7 +81,7 @@
   </div>
     
   <?php include 'includes/footer.php'; ?>
-  <?php include 'includes/employee_type_modal.php'; ?>
+  <?php include 'includes/leave_type_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script>
@@ -104,14 +105,14 @@ $(function(){
 function getRow(id){
   $.ajax({
     type: 'POST',
-    url: 'employee_type_row.php',
+    url: 'leave_type_row.php',
     data: {id:id},
     dataType: 'json',
     success: function(response){
       $('#typeid').val(response.id);
-      $('#edit_employee_type').val(response.type_description);
+      $('#edit_leave_type').val(response.leave_description);
       $('#del_typeid').val(response.id);
-      $('#del_employee_type').html(response.type_description);
+      $('#del_leave_type').html(response.leave_description);
     }
   });
 }

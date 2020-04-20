@@ -55,7 +55,7 @@
                   <th>Name</th>
                   <th>Photo</th>
                   <th>Email</th>
-				  <th>Contact No</th>
+                  <th>Contact No</th>
                   <th>Position</th>
                   <th>Department</th>
                <?php /*   <th>Schedule</th> */ ?>
@@ -161,6 +161,7 @@ function getRow(id){
       $('#gender_val').val(response.gender).html(response.gender);
       $('#department_val').val(response.department_id).html(response.department_name);
       $('#position_val').val(response.position_id).html(response.description);
+      $('#employee_type_val').val(response.employee_type).html(response.type_description);
       $('#schedule_val').val(response.schedule_id).html(response.time_in+' - '+response.time_out);
     }
   });

@@ -38,7 +38,7 @@
             $query = $conn->query($sql);
 
             if($query->num_rows < 1){
-                $_SESSION['error'] = 'leaveapp: No account with this email';
+                $_SESSION['error'] = 'No account with this email';
             }else{
                 $row = $query->fetch_assoc(); 
                 $employee_email = $row['email'];  
@@ -53,8 +53,9 @@
                    '$leave_type', '$leave_purpose', '$leave_address', '$employee_contact', '$alternate_person', '$supervisor_id')";
 
             if ($conn->query($sql) === TRUE) {
+                $_SESSION['success'] = "Leave Application Submitted Successfully.";
             } else {
-                $_SESSION['error'] = 'leaveapp: Error inserting data to leaveapp table';
+                $_SESSION['error'] = $conn->error;;
             }
         }
 

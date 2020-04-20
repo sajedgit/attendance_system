@@ -47,8 +47,9 @@
 <script>
   $(function () {
     $(".leave_form_datetime").datepicker({
-        format: "dd-mm-yyyy",
         autoclose: true,
+        todayHighlight: true,
+        format: 'yyyy-mm-dd',
         todayBtn: true,
         pickerPosition: "bottom-left"
     });

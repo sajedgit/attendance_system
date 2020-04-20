@@ -150,7 +150,7 @@
                                     <label for="leavetype_select" class="control-label">Leave Type: </label>
                                 </div>
                                 <div class="col-sm-7">
-                                    <select class="form-control" id="leavetype_select" name="leavetype_select">
+                                    <select class="form-control" id="leavetype_select" name="leavetype_select" required>
                                         <option value="" selected hidden >Select Leave Type</option>
                                         <option value='Casual'>Casual</option>
                                         <option value='Sick'>Sick</option>
@@ -197,7 +197,7 @@
                                     <label class="control-label">Alternative person: </label>
                                 </div>
                                 <div class="col-sm-7">
-                                    <select class="form-control" id="alternate_person" name="alternate_person">
+                                    <select class="form-control" id="alternate_person" name="alternate_person" required>
                                         <option value="" selected hidden >Select Alternative Person</option>
                                         <?php
                                             for ($i=0; $i<count($allemployee); $i++){
@@ -216,7 +216,7 @@
                                     <label for="supervisor_select" class=" control-label">Supervisor: </label>
                                 </div>
                                 <div class="col-sm-7">
-                                    <select class="form-control" id="supervisor_select" name="supervisor_select">
+                                    <select class="form-control" id="supervisor_select" name="supervisor_select" required>
                                     <option value="" selected hidden >Select Supervisor</option>
                                         <?php
                                             for ($i=0; $i<count($allemployee); $i++){

@@ -84,6 +84,7 @@
                       </select>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label for="position" class="col-sm-3 control-label">Position</label>
 
@@ -102,6 +103,27 @@
                       </select>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="employee_type" class="col-sm-3 control-label">Employee Type</label>
+
+                    <div class="col-sm-9">
+                      <select class="form-control" name="employee_type" id="employee_type" required>
+                        <option value="" selected>- Select -</option>
+                        <?php
+                          $sql = "SELECT * FROM employee_type ";
+                          $query = $conn->query($sql);
+                          while($prow = $query->fetch_assoc()){
+                            echo "
+                              <option value='".$prow['id']."'>".$prow['type_description']."</option>
+                            ";
+                          }
+                        ?>
+                      </select>
+                    </div>
+                </div>
+
+
                 <div class="form-group">
                     <label for="schedule" class="col-sm-3 control-label">Schedule</label>
 
@@ -240,6 +262,26 @@
                       </select>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="edit_employee_type" class="col-sm-3 control-label">Employee Type</label>
+
+                    <div class="col-sm-9">
+                      <select class="form-control" name="edit_employee_type" id="edit_employee_type" required>
+                      <option selected id="employee_type_val"></option>
+                        <?php
+                          $sql = "SELECT * FROM employee_type ";
+                          $query = $conn->query($sql);
+                          while($prow = $query->fetch_assoc()){
+                            echo "
+                              <option value='".$prow['id']."'>".$prow['type_description']."</option>
+                            ";
+                          }
+                        ?>
+                      </select>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label for="edit_schedule" class="col-sm-3 control-label">Schedule</label>
 

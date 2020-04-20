@@ -12,10 +12,12 @@
 		$gender = $_POST['gender'];
 		$position = $_POST['position'];
 		$department = $_POST['department'];
+		$employee_type = $_POST['edit_employee_type'];
 		$schedule = $_POST['schedule'];
 		
 		$sql = "UPDATE employees SET firstname = '$firstname', lastname = '$lastname',email = '$email', address = '$address', birthdate = '$birthdate',
-				contact_info = '$contact', gender = '$gender', position_id = '$position',department_id = '$department', schedule_id = '$schedule' WHERE id = '$empid'";
+				contact_info = '$contact', gender = '$gender', position_id = '$position', department_id = '$department', 
+				employee_type = '$employee_type', schedule_id = '$schedule' WHERE id = '$empid'";
 		if($conn->query($sql)){
 			$_SESSION['success'] = 'Employee updated successfully';
 		}

@@ -11,6 +11,7 @@
 		$gender = $_POST['gender'];
 		$department = $_POST['department'];
 		$position = $_POST['position'];
+		$employee_type = $_POST['employee_type'];
 		$schedule = $_POST['schedule'];
 		$filename = $_FILES['photo']['name'];
 		if(!empty($filename)){
@@ -27,8 +28,8 @@
 		}
 		$employee_id = substr(str_shuffle($letters), 0, 3).substr(str_shuffle($numbers), 0, 9);
 		//
-		$sql = "INSERT INTO employees (employee_id, email, firstname, lastname, address, birthdate, contact_info, gender, department_id, position_id, schedule_id, photo, created_on) 
-				VALUES ('$employee_id','$email', '$firstname', '$lastname', '$address', '$birthdate', '$contact', '$gender','$department', '$position', '$schedule', '$filename', NOW())";
+		$sql = "INSERT INTO employees (employee_id, employee_type, email, firstname, lastname, address, birthdate, contact_info, gender, department_id, position_id, schedule_id, photo, created_on) 
+				VALUES ('$employee_id', '$employee_type', '$email', '$firstname', '$lastname', '$address', '$birthdate', '$contact', '$gender','$department', '$position', '$schedule', '$filename', NOW())";
 		if($conn->query($sql)){
 			$_SESSION['success'] = 'Employee added successfully';
 		}

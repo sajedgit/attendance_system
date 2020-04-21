@@ -111,20 +111,19 @@ $(function(){
 });
 
 function getRow(id){
-  $.ajax({
-    type: 'POST',
-    url: 'leave_alloc_row.php',
-    data: {id:id},
-    dataType: 'json',
-    success: function(response){
-    $('.leave_id').val(response.leave_id);
-    $('#del_leave_alloc').html(response.type_description + "-" + response.leave_description);
-    $('#employee_type_val').val(response.emp_type_id).html(response.type_description);
-    $('#leave_type_val').val(response.leave_type_id).html(response.leave_description);
-    $('#edit_quantity').val(response.quantity).html(response.quantity);
-
-    }
-  });
+    $.ajax({
+        type: 'POST',
+        url: 'leave_alloc_row.php',
+        data: {id:id},
+        dataType: 'json',
+        success: function(response){
+            $('.leave_id').val(response.leave_id);
+            $('#del_leave_alloc').html(response.type_description + "-" + response.leave_description);
+            $('#employee_type_val').val(response.emp_type_id).html(response.type_description);
+            $('#leave_type_val').val(response.leave_type_id).html(response.leave_description);
+            $('#edit_quantity').val(response.quantity).html(response.quantity);
+        }
+    });
 }
 </script>
 </body>

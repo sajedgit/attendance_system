@@ -20,11 +20,9 @@
 				employee_type = '$employee_type', schedule_id = '$schedule' WHERE id = '$empid'";
 		if($conn->query($sql)){
 			$_SESSION['success'] = 'Employee updated successfully';
-		}
-		else{
+		}else{
 			$_SESSION['error'] = $conn->error;
 		}
-
 	}
 	else{
 		$_SESSION['error'] = 'Select employee to edit first';

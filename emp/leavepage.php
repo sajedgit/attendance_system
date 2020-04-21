@@ -247,20 +247,98 @@
                                 <table class="table  text-center" id="table_leave_balance" style="font-size:12px; border: 1px solid black;">	
                                     <thead>
                                         <tr>
-                                            <th style="font-size:12px; border: 1px solid black;">Casual</th>
-                                            <th style="font-size:12px; border: 1px solid black;">Sick</th>
-                                            <th style="font-size:12px; border: 1px solid black;">Earned</th>
-                                            <th style="font-size:12px; border: 1px solid black;">Maternity</th>
-                                            <th style="font-size:12px; border: 1px solid black;">Other</th>
+                                            <th scope="col" style='font-size:12px; border: 1px solid black;'>#</th>
+                                            <?php
+                                                // Table head
+                                                $employee_id = $_SESSION['emp_id'];
+                                                $employee_type = 0;
+                                                $sql = "SELECT employee_type FROM employees WHERE id = '$employee_id'" ;
+                                                $query = $conn->query($sql);
+                                                if($query->num_rows < 1){
+                                                    $_SESSION['error'] = 'Can not find user';
+                                                }else{
+                                                    $row  = $query->fetch_assoc();
+                                                    $employee_type = $row['employee_type'];
+                                                }
+
+                                                if($employee_type != 0){
+                                                    $sql = "SELECT *, leave_allocation.id as leave_id FROM leave_allocation 
+                                                    LEFT JOIN employee_type ON employee_type.id = leave_allocation.emp_type_id
+                                                    LEFT JOIN leave_type ON leave_type.id = leave_allocation.leave_type_id
+                                                    WHERE leave_allocation.emp_type_id = '$employee_type' ORDER BY leave_allocation.leave_type_id ASC";
+                                        
+                                                    $query = $conn->query($sql);
+                                                    while($row  = $query->fetch_assoc()){
+                                                        echo "
+                                                            <th style='font-size:12px; border: 1px solid black;'>".$row['leave_description']."</th>     
+                                                        ";
+                                                    }
+                                                }
+                                            ?>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td style="font-size:12px; border: 1px solid black;">12</td>
-                                            <td style="font-size:12px; border: 1px solid black;">12</td>
-                                            <td style="font-size:12px; border: 1px solid black;">0</td>
-                                            <td style="font-size:12px; border: 1px solid black;">2</td>
-                                            <td style="font-size:12px; border: 1px solid black;">0</td>
+                                        <th scope="row" style='font-size:12px; border: 1px solid black;'>Total</th>
+                                        <?php
+                                            // Total leave row
+                                            if($employee_type != 0){
+                                                $sql = "SELECT *, leave_allocation.id as leave_id FROM leave_allocation 
+                                                LEFT JOIN employee_type ON employee_type.id = leave_allocation.emp_type_id
+                                                LEFT JOIN leave_type ON leave_type.id = leave_allocation.leave_type_id
+                                                WHERE leave_allocation.emp_type_id = '$employee_type' ORDER BY leave_allocation.leave_type_id ASC";
+                                    
+                                                $query = $conn->query($sql);
+                                                while($row  = $query->fetch_assoc()){
+                                                    echo "
+                                                        <td style='font-size:12px; border: 1px solid black;'>". $row['quantity'] ."</td>        
+                                                    ";
+                                                }
+                                            }
+                                        ?>
+                                        </tr>
+                                        <tr>
+                                        <th scope="row" style='font-size:12px; border: 1px solid black;'>Remaining</th>
+                                        <?php
+                                            // Remaining leave row 
+                                            if($employee_type != 0){
+                                                $sql = "SELECT *, leave_allocation.id as leave_id FROM leave_allocation 
+                                                LEFT JOIN employee_type ON employee_type.id = leave_allocation.emp_type_id
+                                                LEFT JOIN leave_type ON leave_type.id = leave_allocation.leave_type_id
+                                                WHERE leave_allocation.emp_type_id = '$employee_type' ORDER BY leave_allocation.leave_type_id ASC";
+                                    
+                                                $query = $conn->query($sql);
+                                                $leave_type_id  = array();
+                                                $total_leave    = array();
+                                                $remaining_leave = array();
+                                                while($row  = $query->fetch_assoc()){
+                                                    array_push($leave_type_id, $row['leave_type_id']);
+                                                    array_push($total_leave, $row['quantity']);
+                                                }
+
+                                                $employee_id = $_SESSION['emp_id'];
+                                                $leave_spent = 0;
+                                                $i = 0;
+                                                foreach($leave_type_id as $value){
+                                                    $sql = "SELECT leave_spent FROM remaining_leave WHERE employee_id=$employee_id AND leave_type_id=$value";
+                                                    $query = $conn->query($sql);
+
+                                                    if($query->num_rows < 1){
+                                                        $leave_spent = 0;
+                                                    }else{
+                                                        $leave_spent = $row['leave_spent'];
+                                                    }
+
+                                                    array_push($remaining_leave, ($total_leave[$i++] - $leave_spent));
+                                                }
+                                                
+                                                foreach($remaining_leave as $value){
+                                                    echo "
+                                                        <td style='font-size:12px; border: 1px solid black;'>". $value ."</td>        
+                                                    ";
+                                                }
+                                            }
+                                        ?>
                                         </tr>
                                     </tbody>
                                 </table>

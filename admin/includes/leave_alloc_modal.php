@@ -17,13 +17,13 @@
                       <select class="form-control" name="add_employee_type" id="add_employee_type" required>
                         <option value="" selected>- Select -</option>
                         <?php
-                          $sql = "SELECT * FROM employee_type ";
-                          $query = $conn->query($sql);
-                          while($prow = $query->fetch_assoc()){
-                            echo "
-                              <option value='".$prow['id']."'>".$prow['type_description']."</option>
-                            ";
-                          }
+                            $sql = "SELECT * FROM employee_type ";
+                            $query = $conn->query($sql);
+                            while($prow = $query->fetch_assoc()){
+                                echo "
+                                <option value='".$prow['id']."'>".$prow['type_description']."</option>
+                                ";
+                            }
                         ?>
                       </select>
                     </div>

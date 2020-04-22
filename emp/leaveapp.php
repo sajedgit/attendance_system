@@ -21,6 +21,7 @@
             $employee_contact   = test_input($_POST["employee_contact"]);
             $alternate_person   = test_input($_POST["alternate_person"]);
             $supervisor_id      = test_input($_POST["supervisor_select"]);
+            $leave_type         = test_input($_POST["leavetype_select"]);
 
             //TODO: date time verify 
             $rawdate = htmlentities($_POST["dateinput_from"]);
@@ -47,10 +48,10 @@
             }
 
             // insert data to leaveapp table
-            $sql = "INSERT INTO leaveapp (employee_name, employee_email, position_id, department_id, company_div, leave_from, leave_to, 
-            leave_type, leave_purpose, leave_address, contact, alt_person_id, supervisor_id) 
-                   VALUES ('$employee_name', '$employee_email', '$position_id', '$department_id', '$company_division', '$date_from', '$date_to', 
-                   '$leave_type', '$leave_purpose', '$leave_address', '$employee_contact', '$alternate_person', '$supervisor_id')";
+            $sql =  "INSERT INTO leaveapp (employee_name, employee_email, position_id, department_id, company_div, leave_from, leave_to, 
+                    leave_type_id, leave_purpose, leave_address, contact, alt_person_id, supervisor_id) 
+                    VALUES ('$employee_name', '$employee_email', '$position_id', '$department_id', '$company_division', '$date_from', '$date_to', 
+                    '$leave_type', '$leave_purpose', '$leave_address', '$employee_contact', '$alternate_person', '$supervisor_id')";
 
             if ($conn->query($sql) === TRUE) {
                 $_SESSION['success'] = "Leave Application Submitted Successfully.";

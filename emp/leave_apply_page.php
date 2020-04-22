@@ -152,11 +152,19 @@
                                 <div class="col-sm-7">
                                     <select class="form-control" id="leavetype_select" name="leavetype_select" required>
                                         <option value="" selected hidden >Select Leave Type</option>
-                                        <option value='Casual'>Casual</option>
-                                        <option value='Sick'>Sick</option>
-                                        <option value='Earned'>Earned</option>
-                                        <option value='Maternity'>Maternity</option>
-                                        <option value='Others'>Others</option>
+                                        <?php
+                                            $sql = "SELECT * FROM leave_type";
+                                            $query = $conn->query($sql);
+
+                                            if($query->num_rows > 0){
+                                                while($rows = $query->fetch_assoc()){
+                                                    echo "
+                                                    <option value='".$rows['id']."'>".$rows['leave_description']."</option>
+                                                    ";
+                                                }
+                                            }
+
+                                        ?>
                                     </select>
                                 </div>
                             </div>

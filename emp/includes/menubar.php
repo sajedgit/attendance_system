@@ -19,8 +19,20 @@
         
         <li><a href="attendance.php"><i class="fa fa-calendar"></i> <span>Attendance</span></a></li>
         <li><a href="employee.php"><i class="fa fa-calendar"></i> <span>Employee List</span></a></li>
-        <li><a href="leavepage.php"><i class="fa fa-calendar"></i> <span>Leave Application</span></a></li>
        
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-calendar"></i>
+                <span>Leave</span>
+                <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="leave_apply_page.php"><i class="fa fa-circle-o"></i> Apply For Leave</a></li>
+                <li><a href="leave_approve_page.php"><i class="fa fa-circle-o"></i> Approve Leave</a></li>
+            </ul>
+        </li>       
         
       </ul>
     </section>

@@ -16,7 +16,7 @@
             if(isset($_SESSION['error'])){
                 echo "
                 <div class='alert alert-danger'>
-                    <strong>Error!</strong> ".$_SESSION['error']." <span><a href='leavepage.php' class='alert-link'>Go Back</a></span>
+                    <strong>Error!</strong> ".$_SESSION['error']." <span><a href='leave_apply_page.php' class='alert-link'>Go Back</a></span>
                 </div>
                 ";
                 unset($_SESSION['error']);
@@ -24,7 +24,7 @@
             if(isset($_SESSION['success'])){
                 echo "
                 <div class='alert alert-success'>
-                    <strong>Success!</strong> Leave Application Submitted Successfully <span><a href='leavepage.php' class='alert-link'>Go Back</a></span>
+                    <strong>Success!</strong> Leave Application Submitted Successfully <span><a href='leave_apply_page.php' class='alert-link'>Go Back</a></span>
                 </div>
                 ";
                 unset($_SESSION['success']);

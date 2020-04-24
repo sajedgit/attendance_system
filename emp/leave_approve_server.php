@@ -25,19 +25,29 @@
                     $dept_head_id  = test_input($_POST['hod_select']);            
                     $forwarder_emp_id = $_SESSION['emp_id'];
 
+                    $hr_id = 0;
+                    if(isset($_POST['hr_select'])){
+                        $hr_id = test_input($_POST['hr_select']);
+                    }
+
                     // database query 
                     if(isset($_POST['submit_forward'])){
                         if($forwarder_emp_id==$supervisor_id){
                             $sql = "UPDATE leaveapp SET leave_from='$date_from', leave_to='$date_to', dept_head_id='$dept_head_id',
-                            supervisor_approval='YES' WHERE id='$leave_id' ";
+                            supervisor_approval='APPROVED' WHERE id='$leave_id' ";
                         }elseif($forwarder_emp_id==$dept_head_id){
-                            $sql = "UPDATE leaveapp SET hod_approval='YES' WHERE id='$leave_id' ";
+                            $sql = "UPDATE leaveapp SET leave_from='$date_from', leave_to='$date_to', hr_id='$hr_id', 
+                            hod_approval='APPROVED' WHERE id='$leave_id' ";
+                        }elseif($forwarder_emp_id==$hr_id){
+                            $sql = "UPDATE leaveapp SET leave_from='$date_from', leave_to='$date_to', hr_approval='APPROVED', final_status='APPROVED' WHERE id='$leave_id' ";
                         }
                     }elseif(isset($_POST['submit_reject'])){
                         if($forwarder_emp_id==$supervisor_id){
-                            $sql = "UPDATE leaveapp SET dept_head_id='$dept_head_id', supervisor_approval='NO' WHERE id='$leave_id' ";
+                            $sql = "UPDATE leaveapp SET dept_head_id='$dept_head_id', supervisor_approval='REJECTED' WHERE id='$leave_id' ";
                         }elseif($forwarder_emp_id==$dept_head_id){
-                            $sql = "UPDATE leaveapp SET hod_approval='NO' WHERE id='$leave_id' ";
+                            $sql = "UPDATE leaveapp SET hr_id='$hr_id', hod_approval='REJECTED' WHERE id='$leave_id' ";
+                        }elseif($forwarder_emp_id==$hr_id){
+                            $sql = "UPDATE leaveapp SET hr_approval='REJECTED', final_status='REJECTED' WHERE id='$leave_id' ";
                         }
                     }
                     

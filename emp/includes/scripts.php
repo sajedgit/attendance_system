@@ -103,7 +103,7 @@ $(function(){
   
   $('#datepicker_add_for_attendance').datepicker({
     autoclose: true,
-	endDate: new Date(),
+    endDate: new Date(),
     format: 'yyyy-mm-dd'
   })
   

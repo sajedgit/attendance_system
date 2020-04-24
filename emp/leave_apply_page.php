@@ -88,7 +88,7 @@
                             }
 
                             $allemployee  = array();
-                            $sql = "SELECT * FROM employees";
+                            $sql = "SELECT * FROM employees ORDER BY firstname";
                             $query = $conn->query($sql);
                     
                             if($query->num_rows < 1){
@@ -238,11 +238,6 @@
                             </div>
 
                         </div>
-
-                        <!-- blank column -->
-                        <!-- <div class="col-sm-1">
-
-                        </div> -->
 
                         <!-- Leave Balance Table Section -->
                         <div class="col-sm-4" style="margin-top: 5px; margin-bottom: 5px;">

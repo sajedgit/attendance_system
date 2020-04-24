@@ -30,7 +30,8 @@
             </a>
             <ul class="treeview-menu">
                 <li><a href="leave_apply_page.php"><i class="fa fa-circle-o"></i> Apply For Leave</a></li>
-                <li><a href="leave_request_list.php"><i class="fa fa-circle-o"></i> Approve Leave</a></li>
+                <li><a href="leave_request_list_applicant.php"><i class="fa fa-circle-o"></i> Your Applications</a></li>
+                <li><a href="leave_request_list.php"><i class="fa fa-circle-o"></i> Pending For Your Approval</a></li>
             </ul>
         </li>       
         

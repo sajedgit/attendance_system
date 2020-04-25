@@ -370,12 +370,13 @@
                                                 $leave_spent = 0;
                                                 $i = 0;
                                                 foreach($leave_type_id as $value){
-                                                    $sql = "SELECT leave_spent FROM remaining_leave WHERE employee_id=$applicant_id AND leave_type_id=$value";
+                                                    $sql = "SELECT leave_spent FROM remaining_leave WHERE employee_id='$applicant_id' AND leave_type_id='$value'";
                                                     $query = $conn->query($sql);
 
                                                     if($query->num_rows < 1){
                                                         $leave_spent = 0;
                                                     }else{
+                                                        $row = $query->fetch_assoc();
                                                         $leave_spent = $row['leave_spent'];
                                                     }
 
@@ -397,6 +398,7 @@
                         
 
                     </div>    
+                    <br>
 
                     <!-- signature of supervisor section -->
                     <!-- <br>

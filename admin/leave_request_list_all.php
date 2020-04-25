@@ -11,12 +11,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Leave applications pending for your approval
+        Leave application List
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li>Leave</li>
-        <li class="active">Pending For Approval</li>
+        <li class="active">Leave Applications</li>
       </ol>
     </section>
     <!-- Main content -->
@@ -51,22 +51,21 @@
               <table id="example1" class="table table-bordered">
                 <thead>
                   <th>Leave ID</th>
-				  <th>Name</th>
-                  <th>Position</th>
+                  <th>Name</th>
+                  <th>Email</th>
                   <th>Leave Type</th>
                   <th>Leave Period</th>
                   <th>Supervisor Approval</th>
                   <th>HOD Approval</th>
                   <th>HR Approval</th>
-                  <th>Details <i class="fa fa-star"></i> </th>
+                  <th>Details</th>
                 </thead>
                 <tbody>
                     <?php
-                        $employee_id = $_SESSION['emp_id'];
                         $sql = "SELECT *, leaveapp.id as leave_id FROM leaveapp 
                         LEFT JOIN position ON position.id = leaveapp.position_id
                         LEFT JOIN leave_type ON leave_type.id = leaveapp.leave_type_id
-                        WHERE leaveapp.supervisor_id='$employee_id' OR leaveapp.dept_head_id='$employee_id' OR leaveapp.hr_id='$employee_id' "; 
+                        ORDER BY leaveapp.id DESC "; 
                         $query = $conn->query($sql);
 
                         function createStatusLabel($status){
@@ -80,14 +79,14 @@
                             }
                             echo "<span class='label $color'>".$status."</span>" ;
                         } 
-                        
+
                         while($row = $query->fetch_assoc()){
                                             
                     ?>
                     <tr>
                         <td><?php echo $row['leave_id']; ?></td>
                         <td><?php echo $row['employee_name']; ?></td>
-                        <td><?php echo $row['description']; ?></td>
+                        <td><?php echo $row['employee_email']; ?></td>
                         <td><?php echo $row['leave_description']; ?></td>
                         <td><?php echo date('d/m/Y', strtotime($row['leave_from'])).' - '.date('d/m/Y', strtotime($row['leave_to'])); ?></td>
                         
@@ -133,7 +132,7 @@ function redirectToLeaveApprovePage(id){
         data: {id:id},
         dataType: 'json',
         success: function(response){
-            window.location.href = "leave_approve_page.php";
+            window.location.href = "leave_view_details.php";
           
       }
     });

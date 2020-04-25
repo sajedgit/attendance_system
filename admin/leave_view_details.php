@@ -14,7 +14,6 @@
     <div class="container">
 
         <?php
-            $session_emp_id = $_SESSION['emp_id'];
             $session_leave_id = 0;
             if(isset($_SESSION['leave_id'])){
                 $session_leave_id = $_SESSION['leave_id'];
@@ -49,23 +48,6 @@
                 $leave_from     = date('Y-m-d', strtotime($row['leave_from']));
                 $leave_to       = date('Y-m-d', strtotime($row['leave_to']));  
             }
-
-            function getAllEmployee(){
-                $allemployee  = array();
-                $sql = "SELECT id, firstname, lastname FROM employees ORDER BY firstname ASC";
-                $query = $conn->query($sql);
-
-                if($query->num_rows < 1){
-                    $_SESSION['error'] = 'Can not find employee';
-                }else{
-                    while($row = $query->fetch_assoc()){
-                        array_push($allemployee, array($row['id'], ($row['firstname'] . ' ' . $row['lastname'])));
-                    }
-                }
-                
-                return $allemployee;
-            }
-            
 
         ?>
 
@@ -125,7 +107,7 @@
                                 <div class="col-sm-7">   
                                     <div class='input-group date leave_form_datetime' >
                                         <input type='text' class="form-control" id="dateinput_from" name="dateinput_from" placeholder="From" 
-                                        <?php echo "value='$leave_from'"; ?> required>
+                                        <?php echo "value='$leave_from'"; ?> disabled>
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -133,7 +115,7 @@
 
                                     <div class='input-group date leave_form_datetime' >
                                         <input type='text' class="form-control" id="dateinput_to" name="dateinput_to" placeholder="To" 
-                                        <?php echo "value='$leave_to'"; ?> required>
+                                        <?php echo "value='$leave_to'"; ?> disabled>
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -240,7 +222,7 @@
                                 </div>
                                 <div class="col-sm-7">
                                     <?php                                            
-                                        if(($dept_head_id != 0 && $dept_head_id==$session_emp_id) || ($hr_id != 0 && $hr_id==$session_emp_id)){
+                                        if(($dept_head_id != 0)){
                                             // select option 
                                             echo "<select class='form-control' id='hod_select' name='hod_select' readonly>";
 
@@ -257,26 +239,8 @@
 
                                         }else{
                                             // select option 
-                                            echo "<select class='form-control' id='hod_select' name='hod_select'>";                                            
-                                            echo "<option value='' selected hidden >Select Department Head</option>";
-
-                                            $allemployee  = array();
-                                            $sql = "SELECT id, firstname, lastname FROM employees ORDER BY firstname ASC";
-                                            $query = $conn->query($sql);
-
-                                            if($query->num_rows < 1){
-                                                $_SESSION['error'] = 'Can not find employee';
-                                            }else{
-                                                while($row = $query->fetch_assoc()){
-                                                    array_push($allemployee, array($row['id'], ($row['firstname'] . ' ' . $row['lastname'])));
-                                                }
-                                            }
-
-                                            for ($i=0; $i<count($allemployee); $i++){
-                                                $id = $allemployee[$i][0];
-                                                $name = $allemployee[$i][1];
-                                                echo "<option value='$id'>$name</option>";
-                                            }
+                                            echo "<select class='form-control' id='hod_select' name='hod_select' readonly>";                                            
+                                            echo "<option value='' selected hidden >Not Selected Yet</option>";
                                         }
 
                                         echo "</select>";
@@ -286,16 +250,13 @@
                             </div>
 
                             <!-- HR Manager Select -->
-                            <?php
-                            if(($dept_head_id != 0 && $dept_head_id==$session_emp_id) || ($hr_id != 0 && $hr_id==$session_emp_id)){
-                            ?>
                             <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
                                 <div class="col-sm-3">
                                     <label for="hr_select" class=" control-label">HR Manager: </label>
                                 </div>
                                 <div class="col-sm-7">
                                     <?php                                            
-                                        if($hr_id != 0 && $hr_id==$session_emp_id){
+                                        if($hr_id != 0){
                                             // select option 
                                             echo "<select class='form-control' id='hr_select' name='hr_select' readonly>";
 
@@ -312,25 +273,8 @@
 
                                         }else{
                                             // select option 
-                                            echo "<select class='form-control' id='hr_select' name='hr_select'>";                                            
-                                            echo "<option value='' selected hidden >Select HR Manager</option>";
-
-                                            $allemployee  = array();
-                                            $sql = "SELECT id, firstname, lastname FROM employees ORDER BY firstname ASC";
-                                            $query = $conn->query($sql);
-
-                                            if($query->num_rows < 1){
-                                                $_SESSION['error'] = 'Can not find employee';
-                                            }else{
-                                                while($row = $query->fetch_assoc()){
-                                                    array_push($allemployee, array($row['id'], ($row['firstname'] . ' ' . $row['lastname'])));
-                                                }
-                                            }
-                                            for ($i=0; $i<count($allemployee); $i++){
-                                                $id = $allemployee[$i][0];
-                                                $name = $allemployee[$i][1];
-                                                echo "<option value='$id'>$name</option>";
-                                            }
+                                            echo "<select class='form-control' id='hr_select' name='hr_select' readonly>";                                            
+                                            echo "<option value='' selected hidden >Not Selected Yet</option>";
                                         }
 
                                         echo "</select>";
@@ -338,11 +282,6 @@
                                     
                                 </div>
                             </div>
-
-                            <?php
-                            }
-                            ?>
-                        
 
                         </div>
 
@@ -435,14 +374,20 @@
 
                                                     if($query->num_rows < 1){
                                                         $leave_spent = 0;
+                                                        
                                                     }else{
                                                         $row = $query->fetch_assoc();
                                                         $leave_spent = $row['leave_spent'];
                                                     }
 
+                                                    echo "leave type id: $value " . "leave spent: $leave_spent" . "</br>";
+
+                                                    // var_dump($leave_spent);
                                                     array_push($remaining_leave, ($total_leave[$i++] - $leave_spent));
+                                                    
                                                 }
                                                 
+                                                var_dump($remaining_leave);
                                                 foreach($remaining_leave as $value){
                                                     echo "
                                                         <td style='font-size:12px; border: 1px solid black;'>". $value ."</td>        
@@ -458,9 +403,10 @@
                         
 
                     </div>    
-
                     <br>
+
                     <!-- signature of supervisor section -->
+                    <!-- <br>
                     <div class="col-sm-4" style="margin-right: 30px">
                         <div class="row">
                             <input type="text" id="forwarder_signature" name="forwarder_signature" class="form-control">
@@ -468,15 +414,16 @@
                         <div class="row">
                             <label class="control-label" style="margin-top: 5px">Signature of the Forwarder </label>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <br><br>
+
                     <!-- form submit section -->
+                    <!-- <br><br>
                     <div class="form group text-right" style="margin-right: 30px; margin-bottom: 10px;">
                         <button type="button" class="btn btn-success" id="forward_button" name="forward_button">Forward</button>
                         <button type="button" class="btn btn-danger" id="reject_button" name="reject_button">Reject</button>
                         <input type="reset"  class="btn btn-warning" id="reset_button"  name="reset_button">
-                    </div> 
+                    </div>  -->
 
                     <!-- Forward Modal -->
                     <div class="modal fade" id="forward_modal" role="dialog" >

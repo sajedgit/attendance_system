@@ -2,11 +2,11 @@
         include_once 'includes/session.php';  
         include_once 'includes/conn.php';    
           
-        echo htmlspecialchars($_SERVER["PHP_SELF"]) . "</br></br>";
+        htmlspecialchars($_SERVER["PHP_SELF"]) . "</br></br>";
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             handleFormPostRequest($conn);
-            // header('location: leave_form_response.php');
+            header('location: leave_form_response.php');
         }
 
         function handleFormPostRequest($conn){
@@ -77,10 +77,10 @@
                                             $datetime2 = new DateTime($leave_end);
                                             $difference = $datetime1->diff($datetime2);
                                             $day_difference = $difference->d;
-                                            echo 'Difference: ' . $day_difference .' days </br>';
+                                            // echo 'Difference: ' . $day_difference .' days </br>';
                                             
                                             $leave_year = date('Y', strtotime($leave_start));
-                                            echo "year: " . $leave_year . "</br>";
+                                            // echo "year: " . $leave_year . "</br>";
 
                                             $sql = "SELECT id FROM employees WHERE email='$email' ";
                                             $query = $conn->query($sql);
@@ -92,13 +92,13 @@
 
                                             if($query->num_rows == 0){
                                                 // insert
-                                                echo "zero row. so insert </br>";
+                                                // echo "zero row. so insert </br>";
                                                 $row = $query->fetch_assoc();
                                                 $sql = "INSERT INTO remaining_leave (employee_id, year, leave_type_id, leave_spent) 
                                                         VALUES ('$emp_id', '$leave_year', '$leave_type_id', '$day_difference') "; 
                                             }else{
                                                 // update 
-                                                echo "row present. so update </br>";
+                                                // echo "row present. so update </br>";
                                                 $row = $query->fetch_assoc();
                                                 $leave_already_spent = $row['leave_spent'];
                                                 $leave_total_spent = $leave_already_spent + $day_difference;

@@ -42,10 +42,10 @@
           unset($_SESSION['success']);
         }
 		
-		 $sql_emp = "SELECT employees.id,CONCAT(trim(firstname),' ',trim(lastname)) as name,position.description as description from employees 
-					 LEFT JOIN position ON position.id=employees.position_id ";
-         $query_emp = $conn->query($sql_emp);
-         //while($row = $query->fetch_assoc()){
+        $sql_emp = "SELECT employees.id,CONCAT(trim(firstname),' ',trim(lastname)) as name,position.description as description from employees 
+                    LEFT JOIN position ON position.id=employees.position_id ";
+        $query_emp = $conn->query($sql_emp);
+        //while($row = $query->fetch_assoc()){
 		
 		
       ?>

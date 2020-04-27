@@ -76,12 +76,10 @@
                                             $datetime1 = new DateTime($leave_start);
                                             $datetime2 = new DateTime($leave_end);
                                             $difference = $datetime1->diff($datetime2);
-                                            $day_difference = $difference->d;
-                                            // echo 'Difference: ' . $day_difference .' days </br>';
+                                            $day_difference = $difference->d + 1;       // ADDED 1. Change if needed  
                                             
                                             $leave_year = date('Y', strtotime($leave_start));
-                                            // echo "year: " . $leave_year . "</br>";
-
+                                            
                                             $sql = "SELECT id FROM employees WHERE email='$email' ";
                                             $query = $conn->query($sql);
                                             $row = $query->fetch_assoc();

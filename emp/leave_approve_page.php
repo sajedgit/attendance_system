@@ -108,7 +108,7 @@
         
                 ?>
 
-                <form id="leaveform" action="leave_approve_server.php" onSubmit="return validateLeaveForm();" method="POST" >
+                <form id="leaveform_approve" action="leave_approve_server.php" onSubmit="return validateLeaveForm();" method="POST" >
                     <!-- company division radio/checkbox section -->
                     <div class="container">
                         <div class="row" style="margin-top: 5px; margin-left: 5px">

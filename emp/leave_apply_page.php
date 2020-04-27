@@ -54,7 +54,7 @@
             <div class="box">
             <div class="box-body" style="overflow-x: auto;">
 
-                <form id="leaveform" action="leaveapp.php" onSubmit="return validateLeaveForm();" method="POST">
+                <form id="leaveform_apply" action="leaveapp.php" method="POST">
                     <!-- company division radio/checkbox section -->
                     <div class="container">
                         <div class="row" style="margin-top: 5px; ">
@@ -145,7 +145,8 @@
                                     while($row = $query->fetch_assoc()){
                                         array_push($allemployee, array($row['id'], ($row['firstname'] . ' ' . $row['lastname'])));
                                     }
-                                }                        
+                                }                  
+                                
                             ?>
 
                             <div class="col-sm-6">
@@ -163,6 +164,7 @@
                                 <?php echo "value='$dept'"; ?>
                                 >
                             </div>
+
                         </div>                
                         
                         <br>
@@ -176,14 +178,14 @@
 
                                     <div class="col-sm-7">    
                                         <div class='input-group date leave_form_datetime' >
-                                            <input type='text' class="form-control" id="dateinput_from" name="dateinput_from" placeholder="From" required>
+                                            <input type='text' class="form-control" id="dateinput_from" name="dateinput_from" placeholder="leave start" required>
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
 
                                         <div class='input-group date leave_form_datetime' >
-                                            <input type='text' class="form-control" id="dateinput_to" name="dateinput_to" placeholder="To" required>
+                                            <input type='text' class="form-control" id="dateinput_to" name="dateinput_to" placeholder="leave end" required>
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -419,7 +421,7 @@
                         </div> 
 
                         <!-- Modal -->
-                        <div class="modal fade" id="myModal" role="dialog" >
+                        <div class="modal fade" id="submit_modal" role="dialog" >
                             <div class="modal-dialog modal-md modal-dialog-centered"  >
                                 <!-- Modal content-->
                                 <div class="modal-content">
@@ -428,13 +430,13 @@
                                         <h3 class="modal-title"><b>Confirm?</b></h3>
                                     </div>
                                     <div class="modal-body">
-                                        <p id="forward_modal_text" >
+                                        <p id="submit_modal_text" >
                                         Make sure you want to submit
                                         </p>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                                        <button type="submit" class="btn btn-info" id="submit_button_modal" name="submit_button_modal">Submit</button>
+                                        <button type="submit" class="btn btn-info" id="enter_button_modal" name="enter_button_modal">Submit</button>
                                     </div>
                                 </div>
                             </div>
@@ -452,23 +454,100 @@
 
         </section>
     </div>
-  
+ 
 
     <?php include 'includes/footer.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 
 <script>
+$('#submit_button').click(function(){
+    var msg = "";
+    var validObj = validateLeaveForm();
+    if(validObj.status){
+        msg = "<b> Make sure you want to forward </b>";
+        $('#submit_modal_text').html(msg).css('color', 'green');
+        $('#enter_button_modal').attr("disabled", false);
+    }else{
+        msg = '<span><i class="fa fa-exclamation-triangle"></i></span>' + '<b> Warning! ' + validObj.message + '</b>';
+        $('#submit_modal_text').html(msg).css('color', 'red');
+        $('#enter_button_modal').attr("disabled", true);
+    }
+    $('#submit_modal').modal('show');
+});
+
 function validateLeaveForm(){       
-    var valid = true;
-    if($('#alternate_person').val()==0 || $('#supervisor_select').val()==0 || $('#leavetype_select').val()==0){
-        valid = false;
+    var ret = {status: true, message: ""};
+
+    if($('#dateinput_from').val()=="" || $('#dateinput_to').val()==""){
+        ret.status = false;
+        ret.message = "Please Select Leave Period";
     }
-    
-    if(!valid){
-        alert('Please Fill the form with correct values');
+    else if($('#leavetype_select').val()==0){
+        ret.status = false;
+        ret.message = "Please Select Leave Type";
     }
-    return valid;
+    else if($('#leave_purpose').val()==0){
+        ret.status = false;
+        ret.message = "Please Input Leave Purpose";        
+    }
+    else if($('#leave_address').val()==0){
+        ret.status = false;
+        ret.message = "Please Input Leave Address";
+    }
+    else if($('#employee_contact').val()==0){
+        ret.status = false;
+        ret.message = "Please Input Employee Contact";
+    }
+    else if($('#alternate_person').val()==0){
+        ret.status = false;
+        ret.message = "Please Select Alternative Person";
+    }
+    else if($('#supervisor_select').val()==0){
+        ret.status = false;
+        ret.message = "Please Select Supervisor";
+    }
+    else if($('#employee_signature').val()==0){
+        ret.status = false;
+        ret.message = "Please Input Your Signature";
+    }
+
+    function getDateDifference(startDate, endDate){
+        var start = new Date(startDate);
+        var end = new Date(endDate);
+
+        var diffDate = (end - start) / (1000 * 60 * 60 * 24);
+        var days = Math.round(diffDate);
+
+        return days;
+    }
+
+    if(ret.status)
+    {
+        var days = getDateDifference($('#dateinput_from').val(), $('#dateinput_to').val());
+        // var today = new Date();
+        // var current_date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+
+        if(days < 0){
+            ret.status = false;
+            ret.message = "Leave start date can't be greater than leave end date";
+        }else{
+            // ajax get request 
+            // var leave_data = {emp_id: "", };
+            // $.ajax({
+            //     type: 'GET',
+            //     url: 'remaining_leave.php',
+            //     data: {leave_type:id},
+            //     dataType: 'json',
+            //     success: function(response){
+            //         window.location.href = "leave_approve_page.php";
+                
+            //     }
+            // });
+        }
+    }
+
+    return ret;
 }
 </script>
 

@@ -51,96 +51,200 @@
           unset($_SESSION['success']);
         }
       ?>
-      <!-- Small boxes (Stat box) -->
-      <div class="row">
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-aqua">
-            <div class="inner">
-              <?php
-                $sql = "SELECT * FROM employees";
-                $query = $conn->query($sql);
+        <!-- Small boxes (Stat box) -->
+        <div class="container">
+        <div class="row">
+        <!-- <div class="col-lg-8"> -->
 
-                echo "<h3>".$query->num_rows."</h3>";
-              ?>
+            <div class="col-lg-3 ">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                    <?php
+                        $sql = "SELECT * FROM employees";
+                        $query = $conn->query($sql);
 
-              <p>Total Employees</p>
+                        echo "<h3>".$query->num_rows."</h3>";
+                    ?>
+
+                    <p>Total Employees</p>
+                    </div>
+                    <div class="icon">
+                    <i class="ion ion-person-stalker"></i>
+                    </div>
+                    <a href="employee.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
             </div>
-            <div class="icon">
-              <i class="ion ion-person-stalker"></i>
-            </div>
-            <a href="employee.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <?php
-                $sql = "SELECT * FROM attendance";
-                $query = $conn->query($sql);
-                $total = $query->num_rows;
+            <!-- ./col -->
 
-                $sql = "SELECT * FROM attendance WHERE status = 1";
-                $query = $conn->query($sql);
-                $early = $query->num_rows;
+            <div class="col-lg-3 ">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                    <?php
+                        $sql = "SELECT * FROM attendance";
+                        $query = $conn->query($sql);
+                        $total = $query->num_rows;
+
+                        $sql = "SELECT * FROM attendance WHERE status = 1";
+                        $query = $conn->query($sql);
+                        $early = $query->num_rows;
+                        
+                        $percentage = ($early/$total)*100;
+
+                        echo "<h3>".number_format($percentage, 2)."<sup style='font-size: 20px'>%</sup></h3>";
+                    ?>
                 
-                $percentage = ($early/$total)*100;
+                    <p>On Time Percentage</p>
+                    </div>
+                    <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                    </div>
+                    <a href="attendance.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            
+            <div class="col-lg-3 ">
+                <!-- small box -->
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                    <?php
+                        $sql = "SELECT * FROM attendance WHERE date = '$today' AND status = 1";
+                        $query = $conn->query($sql);
 
-                echo "<h3>".number_format($percentage, 2)."<sup style='font-size: 20px'>%</sup></h3>";
-              ?>
-          
-              <p>On Time Percentage</p>
+                        echo "<h3>".$query->num_rows."</h3>"
+                    ?>
+                    
+                    <p>On Time Today</p>
+                    </div>
+                    <div class="icon">
+                    <i class="ion ion-clock"></i>
+                    </div>
+                    <a href="attendance.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
             </div>
-            <div class="icon">
-              <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="attendance.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <?php
-                $sql = "SELECT * FROM attendance WHERE date = '$today' AND status = 1";
-                $query = $conn->query($sql);
+            <!-- ./col -->
+            
+            <div class="col-lg-3 ">
+                <!-- small box -->
+                <div class="small-box bg-red">
+                    <div class="inner">
+                    <?php
+                        $sql = "SELECT * FROM attendance WHERE date = '$today' AND status = 0";
+                        $query = $conn->query($sql);
 
-                echo "<h3>".$query->num_rows."</h3>"
-              ?>
-             
-              <p>On Time Today</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-clock"></i>
-            </div>
-            <a href="attendance.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <?php
-                $sql = "SELECT * FROM attendance WHERE date = '$today' AND status = 0";
-                $query = $conn->query($sql);
+                        echo "<h3>".$query->num_rows."</h3>"
+                    ?>
 
-                echo "<h3>".$query->num_rows."</h3>"
-              ?>
+                    <p>Late Today</p>
+                    </div>
+                    <div class="icon">
+                    <i class="ion ion-alert-circled"></i>
+                    </div>
+                    <a href="attendance.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
 
-              <p>Late Today</p>
+            <div class="col-lg-3 ">
+                <!-- small box: Remaining Leave -->
+                <div class="small-box bg-primary">
+                    <div class="inner">
+                    <table class="table text-center">	
+                    <thead>
+                        <tr>
+                    <?php
+                        // Table head
+                        $emp_id = $_SESSION['emp_id'];
+                        $employee_type = 0;
+
+                        $sql = "SELECT employee_type FROM employees WHERE id='$emp_id'" ;
+                        $query = $conn->query($sql);
+                        if($query->num_rows < 1){
+                            $_SESSION['error'] = 'Can not find applicant employee-id';
+                        }else{
+                            $row  = $query->fetch_assoc();
+                            $employee_type = $row['employee_type'];
+                        }
+
+                        if($employee_type != 0){
+                            $sql = "SELECT *, leave_allocation.id as leave_id FROM leave_allocation 
+                            LEFT JOIN employee_type ON employee_type.id = leave_allocation.emp_type_id
+                            LEFT JOIN leave_type ON leave_type.id = leave_allocation.leave_type_id
+                            WHERE leave_allocation.emp_type_id = '$employee_type' ORDER BY leave_allocation.leave_type_id ASC";
+                
+                            $query = $conn->query($sql);
+                            while($row  = $query->fetch_assoc()){
+                                echo "
+                                    <th style='font-size:10px;'>".$row['leave_description']."</th>     
+                                ";
+                            }
+                        }
+                    ?>
+                        </th>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                    <?php
+                        // Remaining leave row 
+                        if($employee_type != 0){
+                            $sql = "SELECT *, leave_allocation.id as leave_id FROM leave_allocation 
+                            LEFT JOIN employee_type ON employee_type.id = leave_allocation.emp_type_id
+                            LEFT JOIN leave_type ON leave_type.id = leave_allocation.leave_type_id
+                            WHERE leave_allocation.emp_type_id = '$employee_type' ORDER BY leave_allocation.leave_type_id ASC";
+                
+                            $query = $conn->query($sql);
+                            $leave_type_id  = array();
+                            $total_leave    = array();
+                            $remaining_leave = array();
+                            while($row  = $query->fetch_assoc()){
+                                array_push($leave_type_id, $row['leave_type_id']);
+                                array_push($total_leave, $row['quantity']);
+                            }
+
+                            $leave_spent = 0;
+                            $i = 0;
+                            foreach($leave_type_id as $value){
+                                $sql = "SELECT leave_spent FROM remaining_leave WHERE employee_id='$emp_id' AND leave_type_id='$value'";
+                                $query = $conn->query($sql);
+
+                                if($query->num_rows < 1){
+                                    $leave_spent = 0;
+                                }else{
+                                    $row = $query->fetch_assoc();
+                                    $leave_spent = $row['leave_spent'];
+                                }
+
+                                array_push($remaining_leave, ($total_leave[$i++] - $leave_spent));
+                            }
+                            
+                            foreach($remaining_leave as $value){
+                                echo "
+                                    <td style='font-size:10px;'>". $value ."</td>        
+                                ";
+                            }
+                        }
+                    ?>
+                    </tr>
+                    </tbody>
+                    </table>
+                    <p>Remaining Leave</p>
+                    </div>
+                    <div class="icon">
+                    <!-- ion-android-apps -->
+                    <i class="ion ion-podium"></i>
+                    </div>
+                    <a href="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
             </div>
-            <div class="icon">
-              <i class="ion ion-alert-circled"></i>
-            </div>
-            <a href="attendance.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-      </div>
+            <!-- ./col -->    
+       </div>         
+       </div>
+       <!-- </div> -->
+
+
       <!-- /.row -->
       <div class="row">
         <div class="col-xs-12">

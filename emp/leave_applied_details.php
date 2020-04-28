@@ -89,6 +89,8 @@
                         $hr_id          = $row['hr_id'];
                         $leave_from     = date('Y-m-d', strtotime($row['leave_from']));
                         $leave_to       = date('Y-m-d', strtotime($row['leave_to']));  
+                        $comment_sup    = $row['comment_sup'];
+                        $comment_hod    = $row['comment_hod'];
                     }
 
                 ?>
@@ -327,6 +329,7 @@
 
                             <!-- Leave Balance Table Section -->
                             <div class="col-sm-4" style="margin-top: 5px; margin-bottom: 5px;">
+                            <div class="col-sm-12">
                                 <div class="row bg-primary text-center" style="border: 1px solid black; border-bottom: 0px">
                                     <label class="control-label" style="font-size:12px;"><b>Leave (No. of days)</b></label>
                                 </div>
@@ -433,8 +436,25 @@
                                         </tbody>
                                     </table>
                                 </div>
+
+                                <!-- comment section -->
+                                <div class="row">
+                                    <div id="collapsible_sup">
+                                        <label for="comment_sup" >Supervisor Comment (optional)</label>
+                                        <textarea class="form-control" rows="3" id="comment_sup" name="comment_sup"
+                                        readonly><?php echo "$comment_sup"; ?>
+                                        </textarea>
+                                    </div>
+                                    <div id="collapsible_hod">
+                                        <label for="comment_hod">Department Head Comment (optional)</label>
+                                        <textarea class="form-control" rows="3" id="comment_hod" name="comment_hod" 
+                                        readonly><?php echo "$comment_hod"; ?>
+                                        </textarea>
+                                    </div>
+                                </div>
+
                             </div>
-                            
+                            </div>
 
                         </div>    
                         <br>

@@ -291,6 +291,7 @@
 
                             <!-- Leave Balance Table Section -->
                             <div class="col-sm-4" style="margin-top: 5px; margin-bottom: 5px;">
+                            <div class="col-sm-12">
                                 <div class="row bg-primary text-center" style="border: 1px solid black; border-bottom: 0px">
                                     <label class="control-label" style="font-size:12px;"><b>Leave (No. of days)</b></label>
                                 </div>
@@ -397,6 +398,7 @@
                                         </tbody>
                                     </table>
                                 </div>
+                            </div>
                             </div>
                             
 

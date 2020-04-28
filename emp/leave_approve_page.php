@@ -88,6 +88,8 @@
                         $hr_id          = $row['hr_id'];
                         $leave_from     = date('Y-m-d', strtotime($row['leave_from']));
                         $leave_to       = date('Y-m-d', strtotime($row['leave_to']));  
+                        $comment_sup    = $row['comment_sup'];
+                        $comment_hod    = $row['comment_hod'];
                     }
 
                     function getAllEmployee(){
@@ -380,11 +382,11 @@
                                 }
                                 ?>
                             
-
                             </div>
 
                             <!-- Leave Balance Table Section -->
                             <div class="col-sm-4" style="margin-top: 5px; margin-bottom: 5px;">
+                            <div class="col-sm-12">
                                 <div class="row bg-primary text-center" style="border: 1px solid black; border-bottom: 0px">
                                     <label class="control-label" style="font-size:12px;"><b>Leave (No. of days)</b></label>
                                 </div>
@@ -491,6 +493,24 @@
                                         </tbody>
                                     </table>
                                 </div>
+
+                                <!-- comment section -->
+                                <div class="row">
+                                    <div id="collapsible_sup">
+                                        <label for="comment_sup" >Supervisor Comment (optional)</label>
+                                        <textarea class="form-control" rows="3" id="comment_sup" name="comment_sup"
+                                            <?php echo ($dept_head_id==$session_emp_id || $hr_id==$session_emp_id)?'readonly':'';?>><?php echo "$comment_sup"; ?>
+                                        </textarea>
+                                    </div>
+                                    <div id="collapsible_hod" class=<?php echo ($supervisor_id==$session_emp_id)?"hide":""; ?>>
+                                        <label for="comment_hod">Department Head Comment (optional)</label>
+                                        <textarea class="form-control" rows="3" id="comment_hod" name="comment_hod" 
+                                            <?php echo ($hr_id==$session_emp_id)?'readonly':'';?>><?php echo "$comment_hod"; ?>
+                                        </textarea>
+                                    </div>
+                                </div>
+                                
+                            </div>
                             </div>
                             
                         </div>    
@@ -509,7 +529,9 @@
                         <br><br>
                         <!-- form submit section -->
                         <div class="form group text-right" style=" margin-bottom: 10px;">
-                            <button type="button" class="btn btn-success" id="forward_button" name="forward_button">Forward</button>
+                            <button type="button" class="btn btn-success" id="forward_button" name="forward_button">
+                            <?php echo ($supervisor_id==$session_emp_id || $dept_head_id==$session_emp_id)?"Recommend":"Approve"; ?>
+                            </button>
                             <button type="button" class="btn btn-danger" id="reject_button" name="reject_button">Reject</button>
                             <input type="reset"  class="btn btn-warning" id="reset_button"  name="reset_button">
                         </div> 

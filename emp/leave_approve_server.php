@@ -29,14 +29,23 @@
                         $hr_id = test_input($_POST['hr_select']);
                     }
 
+                    $comment_sup = "";
+                    $comment_hod = "";
+                    if(isset($_POST['comment_sup'])){
+                        $comment_sup = test_input($_POST['comment_sup']);
+                    }
+                    if(isset($_POST['comment_hod'])){
+                        $comment_hod = test_input($_POST['comment_hod']);
+                    }
+
                     // database query 
                     if(isset($_POST['submit_forward'])){
                         if($forwarder_emp_id==$supervisor_id){
                             $sql = "UPDATE leaveapp SET leave_from='$date_from', leave_to='$date_to', dept_head_id='$dept_head_id',
-                            supervisor_approval='APPROVED' WHERE id='$leave_id' ";
+                            comment_sup='$comment_sup', supervisor_approval='APPROVED' WHERE id='$leave_id' ";
                         }elseif($forwarder_emp_id==$dept_head_id){
                             $sql = "UPDATE leaveapp SET leave_from='$date_from', leave_to='$date_to', hr_id='$hr_id', 
-                            hod_approval='APPROVED' WHERE id='$leave_id' ";
+                            comment_hod='$comment_hod', hod_approval='APPROVED' WHERE id='$leave_id' ";
                         }elseif($forwarder_emp_id==$hr_id){
                             $sql = "UPDATE leaveapp SET leave_from='$date_from', leave_to='$date_to', hr_approval='APPROVED' WHERE id='$leave_id' ";
                         }
@@ -47,7 +56,7 @@
                             $_SESSION['error'] = $conn->error;
                         }
 
-                        // update remaining leave 
+                        // update remaining leave  
                         $sql = "SELECT * FROM leaveapp WHERE id='$leave_id' ";
                         $query = $conn->query($sql);
                         if($query->num_rows > 0){

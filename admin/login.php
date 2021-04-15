@@ -6,7 +6,7 @@
 		$username = $_POST['username'];
 		$password = $_POST['password'];
 
-		$sql = "SELECT * FROM admin WHERE username = '$username'";
+		$sql = "SELECT * FROM admin WHERE username = '$username' or email='$username' ";
 		$query = $conn->query($sql);
 
 		if($query->num_rows < 1){

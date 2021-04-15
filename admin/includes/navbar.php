@@ -4,7 +4,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>C</b>-P</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>A</b> P System</span>
+       <span class="logo-lg"><img src="<?php echo $base_url ?>/images/synesis-it5.png" width="170" height="45px" /></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">

@@ -54,6 +54,7 @@
                 <thead>
                   <th>Time In</th>
                   <th>Time Out</th>
+                  <th>Buffer Time (In Minutes)</th>
                   <th>Tools</th>
                 </thead>
                 <tbody>
@@ -65,6 +66,7 @@
                         <tr>
                           <td>".date('h:i A', strtotime($row['time_in']))."</td>
                           <td>".date('h:i A', strtotime($row['time_out']))."</td>
+                          <td>".$row['buffer_time']."</td>
                           <td>
                             <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
                             <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
@@ -114,6 +116,7 @@ function getRow(id){
       $('#edit_time_in').val(response.time_in);
       $('#edit_time_out').val(response.time_out);
       $('#del_timeid').val(response.id);
+      $('#edit_buffer_time').val(response.buffer_time);
       $('#del_schedule').html(response.time_in+' - '+response.time_out);
     }
   });

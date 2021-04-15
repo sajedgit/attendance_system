@@ -15,7 +15,7 @@
 			$row = $query->fetch_assoc();
 			$id = $row['id'];
 
-			$date_now = date('Y-m-d');
+			$date_now = date('Y-m-d'); 
 
 			if($status == 'in'){
 				$sql = "SELECT * FROM attendance WHERE employee_id = '$id' AND date = '$date_now' AND time_in IS NOT NULL";

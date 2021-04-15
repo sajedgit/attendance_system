@@ -41,8 +41,19 @@
           ";
           unset($_SESSION['success']);
         }
+		
+		 $sql_emp = "SELECT employees.id,CONCAT(trim(firstname),' ',trim(lastname)) as name,position.description as description from employees 
+					 LEFT JOIN position ON position.id=employees.position_id ";
+         $query_emp = $conn->query($sql_emp);
+         //while($row = $query->fetch_assoc()){
+		
+		
       ?>
       <div class="row">
+	  
+	  	
+
+	  
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header with-border">
@@ -53,26 +64,33 @@
                 <thead>
                   <th class="hidden"></th>
                   <th>Date</th>
-                  <th>Employee ID</th>
+                  <th>Email</th>
                   <th>Name</th>
                   <th>Time In</th>
                   <th>Time Out</th>
                   <th>Tools</th>
-                </thead>
+                </thead> 
                 <tbody>
                   <?php
                     $sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attid FROM attendance LEFT JOIN employees ON employees.id=attendance.employee_id ORDER BY attendance.date DESC, attendance.time_in DESC";
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
                       $status = ($row['status'])?'<span class="label label-warning pull-right">ontime</span>':'<span class="label label-danger pull-right">late</span>';
-                      echo "
+                     
+					
+					 if($row['time_out']=="00:00:00")
+						$logout_time=" Not Logout Yet ";
+					 else
+					    $logout_time=date('h:i A', strtotime($row['time_out']));
+                     
+  					  echo "
                         <tr>
                           <td class='hidden'></td>
                           <td>".date('M d, Y', strtotime($row['date']))."</td>
-                          <td>".$row['empid']."</td>
+                          <td>".$row['email']."</td>
                           <td>".$row['firstname'].' '.$row['lastname']."</td>
                           <td>".date('h:i A', strtotime($row['time_in'])).$status."</td>
-                          <td>".date('h:i A', strtotime($row['time_out']))."</td>
+                          <td>".$logout_time."</td>
                           <td>
                             <button class='btn btn-success btn-sm btn-flat edit' data-id='".$row['attid']."'><i class='fa fa-edit'></i> Edit</button>
                             <button class='btn btn-danger btn-sm btn-flat delete' data-id='".$row['attid']."'><i class='fa fa-trash'></i> Delete</button>
@@ -109,6 +127,17 @@ $(function(){
     var id = $(this).data('id');
     getRow(id);
   });
+  
+$('#list_user_id').on('input', function() {   
+
+        const value = $(this).val();
+        const data_value = $('#list_users [value="' + value + '"]').data('value');
+        document.getElementById("employee_hidden").value = data_value;
+     
+});
+
+
+  
 });
 
 function getRow(id){
@@ -119,6 +148,7 @@ function getRow(id){
     dataType: 'json',
     success: function(response){
       $('#datepicker_edit').val(response.date);
+      $('#datepicker_edit_for_attendance').val(response.date);
       $('#attendance_date').html(response.date);
       $('#edit_time_in').val(response.time_in);
       $('#edit_time_out').val(response.time_out);

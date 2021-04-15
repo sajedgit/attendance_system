@@ -2,7 +2,7 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar user panel -->
-      <div class="user-panel">
+      <div class="user-panel" style="padding-bottom: 25px;">
         <div class="pull-left image">
           <img src="<?php echo (!empty($user['photo'])) ? '../images/'.$user['photo'] : '../images/profile.jpg'; ?>" class="img-circle" alt="User Image">
         </div>
@@ -28,15 +28,16 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="employee.php"><i class="fa fa-circle-o"></i> Employee List</a></li>
-            <li><a href="overtime.php"><i class="fa fa-circle-o"></i> Overtime</a></li>
-            <li><a href="cashadvance.php"><i class="fa fa-circle-o"></i> Cash Advance</a></li>
+       <?php /*     <li><a href="overtime.php"><i class="fa fa-circle-o"></i> Overtime</a></li>
+            <li><a href="cashadvance.php"><i class="fa fa-circle-o"></i> Cash Advance</a></li> */ ?>
             <li><a href="schedule.php"><i class="fa fa-circle-o"></i> Schedules</a></li>
           </ul>
         </li>
-        <li><a href="deduction.php"><i class="fa fa-file-text"></i> Deductions</a></li>
+ <?php /*       <li><a href="deduction.php"><i class="fa fa-file-text"></i> Deductions</a></li> */ ?>
+        <li><a href="department.php"><i class="fa fa-suitcase"></i> Departments</a></li>
         <li><a href="position.php"><i class="fa fa-suitcase"></i> Positions</a></li>
         <li class="header">PRINTABLES</li>
-        <li><a href="payroll.php"><i class="fa fa-files-o"></i> <span>Payroll</span></a></li>
+       <?php /* <li><a href="payroll.php"><i class="fa fa-files-o"></i> <span>Payroll</span></a></li> */ ?>
         <li><a href="schedule_employee.php"><i class="fa fa-clock-o"></i> <span>Schedule</span></a></li>
       </ul>
     </section>

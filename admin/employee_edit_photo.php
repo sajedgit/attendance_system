@@ -5,7 +5,7 @@
 		$empid = $_POST['id'];
 		$filename = $_FILES['photo']['name'];
 		if(!empty($filename)){
-			move_uploaded_file($_FILES['photo']['tmp_name'], '../images/'.$filename);	
+			move_uploaded_file($_FILES['photo']['tmp_name'], '../images/'.$filename) ;	
 		}
 		
 		$sql = "UPDATE employees SET photo = '$filename' WHERE id = '$empid'";

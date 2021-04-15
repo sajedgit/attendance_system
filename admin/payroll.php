@@ -111,7 +111,7 @@
 
                       echo "
                         <tr>
-                          <td>".$row['lastname'].", ".$row['firstname']."</td>
+                          <td>".$row['lastname']." ".$row['firstname']."</td>
                           <td>".$row['employee_id']."</td>
                           <td>".number_format($gross, 2)."</td>
                           <td>".number_format($deduction, 2)."</td>

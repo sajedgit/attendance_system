@@ -50,7 +50,7 @@
     $('#example2').DataTable({
       'paging'      : true,
       'lengthChange': false,
-      'searching'   : false,
+      'searching'   : true,
       'ordering'    : true,
       'info'        : true,
       'autoWidth'   : false
@@ -81,16 +81,31 @@ $(function(){
     autoclose: true,
     format: 'yyyy-mm-dd'
   })
+  
   $('#datepicker_edit').datepicker({
     autoclose: true,
+	defaultDate: date,
     format: 'yyyy-mm-dd'
   })
+  
+  $('#datepicker_add_for_attendance').datepicker({
+    autoclose: true,
+	endDate: new Date(),
+    format: 'yyyy-mm-dd'
+  })
+  
+  $('#datepicker_edit_for_attendance').datepicker({
+    autoclose: true,
+	endDate: new Date(),
+    format: 'yyyy-mm-dd'
+  })
+
 
   //Timepicker
   $('.timepicker').timepicker({
     showInputs: false
   })
-
+ 
   //Date range picker
   $('#reservation').daterangepicker()
   //Date range picker with time picker

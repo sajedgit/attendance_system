@@ -52,7 +52,7 @@
               <table id="example1" class="table table-bordered">
                 <thead>
                   <th>Position Title</th>
-                  <th>Rate per Hour</th>
+               <?php  /*  <th>Rate per Hour</th> */ ?>
                   <th>Tools</th>
                 </thead>
                 <tbody>
@@ -63,7 +63,7 @@
                       echo "
                         <tr>
                           <td>".$row['description']."</td>
-                          <td>".number_format($row['rate'], 2)."</td>
+                         <!-- <td>".number_format($row['rate'], 2)."</td>-->
                           <td>
                             <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
                             <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
@@ -87,15 +87,16 @@
 <?php include 'includes/scripts.php'; ?>
 <script>
 $(function(){
-  $('.edit').click(function(e){
-    e.preventDefault();
+
+  $(document).on('click', ".edit", function() {
+   
     $('#edit').modal('show');
     var id = $(this).data('id');
     getRow(id);
   });
 
-  $('.delete').click(function(e){
-    e.preventDefault();
+  $(document).on('click', ".delete", function() {
+    
     $('#delete').modal('show');
     var id = $(this).data('id');
     getRow(id);

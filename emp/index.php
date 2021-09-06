@@ -60,8 +60,14 @@
 			
 			<div class="row">
 				<div class="col-xs-4">
-					<button type="submit" class="btn btn-primary btn-block btn-flat" name="login"><i class="fa fa-sign-in"></i> Sign In</button>
+					<button type="submit" class="btn btn-success btn-block btn-flat" name="login"><i class="fa fa-sign-in"></i> Sign In</button>
 				</div>
+                <div class="col-xs-2">
+
+                </div>
+                <div class="col-xs-6">
+                    <a class="btn btn-primary btn-block btn-flat" href="forgot_password.php">Forget Pssword </a>
+                </div>
 			</div>
 			</form>
 			</div>

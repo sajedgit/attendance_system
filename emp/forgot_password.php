@@ -15,7 +15,7 @@ if (isset($_POST['forgot'])) {
     $password = substr( str_shuffle( $chars ), 0, 8 );
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-    $sql = "UPDATE employees SET  password = '$password_hash' WHERE email = '".$email."'";
+     $sql = "UPDATE employees SET  password = '$password_hash' WHERE email = '".$email."'";
     if($conn->query($sql))
     {
         $flag=1;
@@ -30,7 +30,15 @@ if (isset($_POST['forgot'])) {
         // More headers
         $headers .= 'From: <hr@ynesisit.info>' . "\r\n";
 
-        mail($to,$subject,$message,$headers);
+       if(mail($to,$subject,$message,$headers))
+       {
+           echo "Email sent";
+       }
+       else
+       {
+           echo "Email not sent";
+       }
+
     }
     else{
         $flag=0;
@@ -76,7 +84,7 @@ if (isset($_POST['forgot'])) {
                                 if($flag==0)
                                     echo "Please enter your email address";
                                 else
-                                    echo "A password has sent to your email address.";
+                                    echo "<span style='color:green;'>A password has sent to your email address.</span>";
                                 ?>
 
                             </p>

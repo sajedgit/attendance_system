@@ -1,16 +1,31 @@
 <?php
 
 
-$email="sajedaiub@gmail.com";
-$password="123456";
-$subject="Your account has been created to hr.synesisit.info";
-$header="From: hr.synesisit.info";
-$content="Your new account has been created to hr.synesisit.info and Your password is <b>$password</b>. <br/> ";
-$content.="<br/> PLEASE CHANGE THE PASSWORD after login to this system ( http://hr.synesisit.info/attendance ) ";
-if(mail($email, $subject, $content, $header))
-	echo "email send";
-else
-	echo "email not send";
+require_once getcwd()."/vendor/autoload.php";
 
+// Create the Transport
+$transport = (new Swift_SmtpTransport('mail.synesisit.info', 25))
+    ->setUsername('attendanceinfo@synesisit.info')
+    ->setPassword('synesis@HR#2021')
+;
+
+// Create the Mailer using your created Transport
+$mailer = new Swift_Mailer($transport);
+
+// Create a message
+$message = (new Swift_Message('Wonderful Test Subject'))
+    ->setFrom(['attendanceinfo@synesisit.info' => 'Ahmed Khan'])
+    ->setTo(['sajedaiub@gmail.com', 'sajed.ahmed@synesisit.info' => 'Sajed Khan'])
+    ->setBody('Here is the message itself')
+;
+
+// Send the message
+$result = $mailer->send($message);
+
+
+
+
+
+die();
 
 ?>

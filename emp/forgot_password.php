@@ -6,6 +6,7 @@ if( isset($_SESSION['emp_id']) && $_SESSION['emp_type']=="employee" ){
 ?>
 <?php include 'includes/conn.php'; ?>
 <?php include 'includes/header.php'; ?>
+<?php require_once "../vendor/autoload.php"; ?>
 <?php
 $flag=0;
 if (isset($_POST['forgot'])) {
@@ -13,6 +14,7 @@ if (isset($_POST['forgot'])) {
     $email = trim($_POST['email']);
     $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     $password = substr( str_shuffle( $chars ), 0, 8 );
+    //$password = "SynesisIt";
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
      $sql = "UPDATE employees SET  password = '$password_hash' WHERE email = '".$email."'";
@@ -21,23 +23,29 @@ if (isset($_POST['forgot'])) {
         $flag=1;
         $to = $email;
         $subject = "Password change request from hr@ynesisit.info";
+        $message = "Hi $email,\n<br/>";
+        $message.= "Your new password is: <strong>$password</strong> please login with this and update this password after login. \n";
 
-        $message = "Hi $email,\n";
-        $message = "Your new password is $password please login with this and update this password after login. \n";
-        $headers = "MIME-Version: 1.0" . "\r\n";
-        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
-        // More headers
-        $headers .= 'From: <hr@ynesisit.info>' . "\r\n";
+        // Create the Transport
+        $transport = (new Swift_SmtpTransport('mail.synesisit.info', 25))
+            ->setUsername('attendanceinfo@synesisit.info')
+            ->setPassword('synesis@HR#2021')
+        ;
 
-       if(mail($to,$subject,$message,$headers))
-       {
-           echo "Email sent";
-       }
-       else
-       {
-           echo "Email not sent";
-       }
+        // Create the Mailer using your created Transport
+        $mailer = new Swift_Mailer($transport);
+
+        // Create a message
+        $message = (new Swift_Message($subject))
+            ->setFrom(['attendanceinfo@synesisit.info' => 'SynesisIT HR'])
+           // ->setTo(['sajedaiub@gmail.com', 'sajed.ahmed@synesisit.info' => 'Sajed Khan'])
+            ->setTo([ $to => $to])
+            ->setContentType("text/html")
+            ->setBody($message);
+
+        // Send the message
+        $result = $mailer->send($message);
 
     }
     else{
